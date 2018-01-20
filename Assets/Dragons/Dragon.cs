@@ -5,18 +5,25 @@ namespace Assets.Dragons
 {
     public class Dragon : MonoBehaviour
     {
-        public int x = 0;
-        public int y = 0;
+        public Head head;
+        private const float Width = 11.2f;
+        private const float Height = -9.89f;
+
+        public int x = 1;
+        public int y = 1;
 
         private int loop = 0;
 
         public void FixedUpdate()
         {
             loop++;
-            if(loop == 10)
+            if(loop == 30)
             {
-                transform.position = new Vector3(transform.position.x + 1 / 8.0f, transform.position.y, transform.position.z);
+                x = (8-x) % 8;
+                //y = (y + 4) % 8;
+                transform.position = new Vector3(Width * x / 8, Height * y / 8, 0.0f);
                 Debug.Log("move");
+                loop = 0;
             }                
         }
 
