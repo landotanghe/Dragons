@@ -1,78 +1,51 @@
-﻿using Assets;
-using Assets.ActionPicker.ElementsWheel;
-using Assets.Dragons;
-using UnityEngine;
+﻿using Assets.Dragons;
 
-public class ActionExecutor : MonoBehaviour
+namespace Assets.ActionPicker.ElementsWheel.Actions
 {
-    public ElementsWheel elementsWheel;
-    public Dragon dragon;
-    public Board board;
-    private IAction[] _actions;
-    private KeyCode FirstElementKeyCode = KeyCode.Keypad1;
-
-
-	// Use this for initialization
-	void Start () {
-        _actions = new IAction[]
-        {
-            new WaterAction(),
-            new WaterAction(),
-            new WaterAction(),
-            new WaterAction(),
-
-            new WaterAction(),
-            new WaterAction(),
-            new WaterAction(),
-            new WaterAction(),
-        };
-    }
-
-
-	
-	// Update is called once per frame
-	void Update () {
-        Event e = Event.current;
-        if (e.isKey)
-        {
-            CheckInput(e.keyCode);
-        }
-	}
-
-    private void CheckInput(KeyCode keyPressed)
+    public class ActionExecutor
     {
-        var selectedElementIndex = keyPressed - FirstElementKeyCode;
-        if (IsInValidIndexRange(selectedElementIndex))
-        {
-            TryMovingDisc(selectedElementIndex);
-        }
-    }
+        private Dragon dragon;
+        private Board board;
 
-    private bool IsInValidIndexRange(int selectedElementIndex)
-    {
-        return selectedElementIndex >= 0 
-            && selectedElementIndex < _actions.Length;
-    }
+        private IAction _action;
+        private Option[] _options;
+        private int nextOptionToChoose = 0;
+        private AvailableOptions[] _availableOptions;
 
-    private void TryMovingDisc(int selectedDiscPosition)
-    {
-        if (CanMoveDiscOn(selectedDiscPosition))
+        public ActionExecutor(IAction action, Dragon dragon, Board board)
         {
-            var actionIndex = elementsWheel.MoveDiscsFrom(selectedDiscPosition);
-            _actions[actionIndex].Execute(dragon, board);
-        }
-    }
+            _availableOptions = _action.GetAvailableOptions(dragon, board);
 
-    private bool CanMoveDiscOn(int actionIndex)
-    {
-        if (!elementsWheel.HasDiscsAt(actionIndex))
-        {
-            return false;
+            _action = action;
+            _options = new Option[_availableOptions.Length];
         }
 
-        var predictedActionIndex = elementsWheel.PredictFinalDropOfLocation(actionIndex);
+        public bool IsValidOption(int optionIndex)
+        {
+            return optionIndex >= 0
+                && nextOptionToChoose < _availableOptions.Length
+                && optionIndex < _availableOptions[nextOptionToChoose].Options.Length;
+        }
 
-        var predictedAction = _actions[predictedActionIndex];
-        return predictedAction.CanExecute(dragon, board);
+        public void PickOption(int optionToPick)
+        {
+            _options[nextOptionToChoose] = _availableOptions[nextOptionToChoose].Options[optionToPick];
+            nextOptionToChoose++;
+        }
+
+        public Option[] GetAvailableOptions()
+        {
+            return _availableOptions[nextOptionToChoose].Options;
+        }
+
+        public bool CanExecute()
+        {
+            return nextOptionToChoose == _options.Length;
+        }
+
+        public void Execute()
+        {
+            _action.Execute(dragon, board, _options);
+        }
     }
 }

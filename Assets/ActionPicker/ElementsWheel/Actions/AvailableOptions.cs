@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Assets.ActionPicker.ElementsWheel.Actions
 {
@@ -17,6 +18,11 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
         public void RemoveOption(Option optionToRemove)
         {
             Options = Options.Where(o => o != Option.Left).ToArray();
+        }
+
+        internal static AvailableOptions AnyMove()
+        {
+            return AvailableOptions.Are(Option.Left, Option.Right, Option.Forward);
         }
     }
 }

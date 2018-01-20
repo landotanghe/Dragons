@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.ActionPicker.ElementsWheel
 {
@@ -25,14 +26,21 @@ namespace Assets.ActionPicker.ElementsWheel
             return GetDiscsAt(position) != 0;
         }
 
-        public int PredictFinalDropOfLocation(int pickupLocation)
+        public IAction GetActionFor(int pickupLocation)
         {
-            return (GetDiscsAt(pickupLocation) + pickupLocation) % elements.Length;
+            var actionPosition = (GetDiscsAt(pickupLocation) + pickupLocation) % elements.Length;
+            return elements[actionPosition].action;
         }
 
         public int GetDiscsAt(int position)
         {
             return elements[position].Height;
+        }
+
+        public bool IsValidIndex(int selectedElementIndex)
+        {
+            return selectedElementIndex >= 0
+                && selectedElementIndex < elements.Length;
         }
 
         public int MoveDiscsFrom(int pickupLocation)
