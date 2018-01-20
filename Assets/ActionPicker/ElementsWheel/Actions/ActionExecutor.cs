@@ -1,4 +1,5 @@
-﻿using Assets.Dragons;
+﻿using System;
+using Assets.Dragons;
 
 namespace Assets.ActionPicker.ElementsWheel.Actions
 {
@@ -41,6 +42,11 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
         public bool CanExecute()
         {
             return nextOptionToChoose == _options.Length;
+        }
+
+        public bool HasAdditionalMove()
+        {
+            return false;
         }
 
         public void Execute()
