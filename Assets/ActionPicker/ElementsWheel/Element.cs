@@ -1,6 +1,7 @@
 ﻿using Assets;
 using Assets.ActionPicker.ElementsWheel;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Element : MonoBehaviour {
     public IAction action;
@@ -34,6 +35,15 @@ public class Element : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        var countDisplay = transform.Find("DiscCountDisplay");
+
+        if (countDisplay == null)
+            return;
+
+        var countDisplayText = countDisplay.GetComponent<Text>();
+
+        if (countDisplayText == null)
+            return; 
+        countDisplayText.text = "" + discStackSize;
 	}
 }

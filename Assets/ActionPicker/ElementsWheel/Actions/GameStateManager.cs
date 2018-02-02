@@ -22,19 +22,24 @@ public class GameStateManager : MonoBehaviour
 	void Start () {
         _currentPlayer = whiteDragon;
         isSecondMove = false;
+        _actionExecutor = null;
     }
 
 
 	
 	// Update is called once per frame
 	void Update () {
+       
+	}
+
+    private void OnGUI()
+    {
         Event e = Event.current;
-        if (e!= null && e.isKey)
+        if (e != null && e.isKey)
         {
-            Debug.Log("key pressed");
             CheckInput(e.keyCode);
         }
-	}
+    }
 
     private void CheckInput(KeyCode keyPressed)
     {
@@ -42,13 +47,15 @@ public class GameStateManager : MonoBehaviour
 
         if (_actionExecutor == null)
         {
+            Debug.Log("Selecting action " + selectedElementIndex);
             if (elementsWheel.IsValidIndex(selectedElementIndex))
             {
                 TryMovingDisc(selectedElementIndex);
             }
         }
         else
-        {            
+        {
+            Debug.Log("Selecting options for action " + selectedElementIndex);
             if(_actionExecutor.CanExecute())
             {
                 _actionExecutor.Execute();

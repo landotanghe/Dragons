@@ -6,25 +6,13 @@ namespace Assets.Dragons
     public class Dragon : MonoBehaviour
     {
         public Head head;
-        private const float Width = 11.2f;
-        private const float Height = -9.89f;
-
-        public int x = 1;
-        public int y = 1;
-
+        
         private int loop = 0;
 
         public void FixedUpdate()
         {
+            head.Reposition((loop / 40) % 8, 0, Direction.North);
             loop++;
-            if(loop == 30)
-            {
-                x = (8-x) % 8;
-                //y = (y + 4) % 8;
-                transform.position = new Vector3(Width * x / 8, Height * y / 8, 0.0f);
-                Debug.Log("move");
-                loop = 0;
-            }                
         }
 
         public bool CanTurnRight(Board board)
