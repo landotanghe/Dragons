@@ -6,13 +6,10 @@ namespace Assets.Dragons
     public class Dragon : MonoBehaviour
     {
         public Head head;
+        public Tail[] tail;
         
-        private int loop = 0;
-
         public void FixedUpdate()
         {
-            head.Reposition((loop / 40) % 8, 0, Direction.North);
-            loop++;
         }
 
         public bool CanTurnRight(Board board)
@@ -32,17 +29,76 @@ namespace Assets.Dragons
 
         public void TurnLeft(Board board)
         {
-            throw new NotImplementedException();
+            if(head.Heading == Direction.East)
+            {
+                GoNorth();
+            }else if(head.Heading == Direction.North)
+            {
+                GoWest();
+            }else if(head.Heading == Direction.West)
+            {
+                GoSouth();
+            }else if(head.Heading == Direction.South)
+            {
+                GoEast();
+            }
+            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Heading);
         }
 
         public void TurnRight(Board board)
         {
-            throw new NotImplementedException();
+            if (head.Heading == Direction.East)
+            {
+                GoSouth();
+            }else if (head.Heading == Direction.North)
+            {
+                GoEast();
+            }else if (head.Heading == Direction.West)
+            {
+                GoNorth();
+            }else if (head.Heading == Direction.South)
+            {
+                GoWest();
+            }
+            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Heading);
         }
 
         public void MoveForwards(Board board)
         {
-            throw new NotImplementedException();
+            if (head.Heading == Direction.East)
+            {
+                GoEast();
+            }else if (head.Heading == Direction.North)
+            {
+                GoNorth();
+            }else if (head.Heading == Direction.West)
+            {
+                GoWest();
+            }else if (head.Heading == Direction.South)
+            {
+                GoSouth();
+            }
+            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Heading);
+        }
+
+        private void GoNorth()
+        {
+            head.Reposition(head.X, head.Y + 1, Direction.North);
+        }
+
+        private void GoEast()
+        {
+            head.Reposition(head.X + 1, head.Y, Direction.East);
+        }
+
+        private void GoSouth()
+        {
+            head.Reposition(head.X, head.Y - 1, Direction.South);
+        }
+
+        private void GoWest()
+        {
+            head.Reposition(head.X - 1, head.Y , Direction.West);
         }
     }
 }

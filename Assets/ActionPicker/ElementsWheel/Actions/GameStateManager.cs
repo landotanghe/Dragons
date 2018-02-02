@@ -35,7 +35,7 @@ public class GameStateManager : MonoBehaviour
     private void OnGUI()
     {
         Event e = Event.current;
-        if (e != null && e.isKey)
+        if (e != null && e.type.Equals(EventType.KeyUp))
         {
             CheckInput(e.keyCode);
         }
@@ -43,11 +43,29 @@ public class GameStateManager : MonoBehaviour
 
     private void CheckInput(KeyCode keyPressed)
     {
+        if(keyPressed == KeyCode.LeftArrow)
+        {
+            Debug.Log("left");
+            _currentPlayer.TurnLeft(board);
+            SwitchPlayer();
+        }else if(keyPressed == KeyCode.RightArrow)
+        {
+            Debug.Log("right");
+            _currentPlayer.TurnRight(board);
+            SwitchPlayer();
+        }
+        else if (keyPressed == KeyCode.UpArrow)
+        {
+            Debug.Log("forward");
+            _currentPlayer.MoveForwards(board);
+            SwitchPlayer();
+        }
+
         var selectedElementIndex = keyPressed - FirstElementKeyCode;
 
         if (_actionExecutor == null)
         {
-            Debug.Log("Selecting action " + selectedElementIndex);
+            //Debug.Log("Selecting action " + selectedElementIndex);
             if (elementsWheel.IsValidIndex(selectedElementIndex))
             {
                 TryMovingDisc(selectedElementIndex);
@@ -55,7 +73,7 @@ public class GameStateManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Selecting options for action " + selectedElementIndex);
+            //Debug.Log("Selecting options for action " + selectedElementIndex);
             if(_actionExecutor.CanExecute())
             {
                 _actionExecutor.Execute();
@@ -74,16 +92,21 @@ public class GameStateManager : MonoBehaviour
         }
         else
         {
-            _currentPlayer = _currentPlayer == whiteDragon ? blackDragon : whiteDragon;
+            SwitchPlayer();
             isSecondMove = false;
         }
+    }
+
+    private void SwitchPlayer()
+    {
+        _currentPlayer = _currentPlayer == whiteDragon ? blackDragon : whiteDragon;
     }
 
     private void TryMovingDisc(int selectedDiscPosition)
     {
         if (CanMoveDiscsFrom(selectedDiscPosition))
         {
-            Debug.Log("moving disc from " + selectedDiscPosition);
+           // Debug.Log("moving disc from " + selectedDiscPosition);
             var actionIndex = elementsWheel.MoveDiscsFrom(selectedDiscPosition);
             var action = elementsWheel.elements[actionIndex].action;
 
@@ -91,7 +114,7 @@ public class GameStateManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("can't move disc from " + selectedDiscPosition);
+           // Debug.Log("can't move disc from " + selectedDiscPosition);
         }
     }
 
