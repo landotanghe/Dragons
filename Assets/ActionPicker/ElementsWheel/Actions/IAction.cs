@@ -27,17 +27,17 @@ namespace Assets
 
         private static void RemoveInvalidMoves(Dragon dragon, Board board, AvailableOptions[] availableOptions)
         {
-            if (!dragon.CanTurnLeft(board))
+            if (!dragon.MoveForwards(board).CanExecute(board))
             {
                 RemoveOption(availableOptions, Option.Left);
             }
 
-            if (!dragon.CanTurnRight(board))
+            if (!dragon.TurnRight(board).CanExecute(board))
             {
                 RemoveOption(availableOptions, Option.Right);
             }
 
-            if (!dragon.CanMoveForwards(board))
+            if (!dragon.MoveForwards(board).CanExecute(board))
             {
                 RemoveOption(availableOptions, Option.Forward);
             }

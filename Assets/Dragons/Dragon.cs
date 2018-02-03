@@ -11,103 +11,123 @@ namespace Assets.Dragons
         public void FixedUpdate()
         {
         }
-
-        public bool CanTurnRight(Board board)
-        {
-            return true;
-        }
-
-        public bool CanTurnLeft(Board board)
-        {
-            return true;
-        }
-
-        public bool CanMoveForwards(Board board)
-        {
-            return true;
-        }
-
-        public void TurnLeft(Board board)
+        
+        public Move TurnLeft(Board board)
         {
             if(head.Direction == Direction.East)
             {
-                GoNorth();
+                return GoNorth();
             }else if(head.Direction == Direction.North)
             {
-                GoWest();
+                return GoWest();
             }else if(head.Direction == Direction.West)
             {
-                GoSouth();
+                return GoSouth();
             }else if(head.Direction == Direction.South)
             {
-                GoEast();
+                return GoEast();
             }
-            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Direction);
+            throw new NotImplementedException();
         }
 
-        public void TurnRight(Board board)
+        public Move TurnRight(Board board)
         {
             if (head.Direction == Direction.East)
             {
-                GoSouth();
+                return GoSouth();
             }else if (head.Direction == Direction.North)
             {
-                GoEast();
+                return GoEast();
             }else if (head.Direction == Direction.West)
             {
-                GoNorth();
+                return GoNorth();
             }else if (head.Direction == Direction.South)
             {
-                GoWest();
+                return GoWest();
             }
-            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Direction);
+            throw new NotImplementedException();
         }
 
-        public void MoveForwards(Board board)
+        public Move MoveForwards(Board board)
         {
             if (head.Direction == Direction.East)
             {
-                GoEast();
+                return GoEast();
             }else if (head.Direction == Direction.North)
             {
-                GoNorth();
+                return GoNorth();
             }else if (head.Direction == Direction.West)
             {
-                GoWest();
+                return GoWest();
             }else if (head.Direction == Direction.South)
             {
-                GoSouth();
+                return GoSouth();
             }
-            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Direction);
-        }
-
-        private void GoNorth()
-        {
-            MoveLastTailPartToHeadPosition(Direction.North);
-            head.Reposition(head.X, head.Y + 1, Direction.North);
-            head.SetDownStream(Direction.South);
+            throw new NotImplementedException();
         }
 
 
-        private void GoEast()
+        public class Move
         {
-            MoveLastTailPartToHeadPosition(Direction.East);
-            head.Reposition(head.X + 1, head.Y, Direction.East);
-            head.SetDownStream(Direction.West);
+            private Dragon _dragon;
+            public Direction Direction { get; private set; }
+            public int X { get; private set; }
+            public int Y { get; private set; }
+
+            public Move(Dragon dragon, Direction direction, int x, int y)
+            {
+                _dragon = dragon;
+                Direction = direction;
+                X = x;
+                Y = y;
+            }
+
+            public bool CanExecute(Board board)
+            {
+                return true;
+            }
+
+            public void Execute()
+            {
+                _dragon.MoveLastTailPartToHeadPosition(Direction);
+                _dragon.head.Reposition(X, Y, Direction);
+
+                Direction oppositeDirection = OppositeOf(Direction);
+                _dragon.head.SetDownStream(oppositeDirection);
+            }
+
+            private Direction OppositeOf(Direction direction)
+            {
+                if (direction == Direction.North)
+                    return Direction.South;
+                if (direction == Direction.South)
+                    return Direction.North;
+                if (direction == Direction.East)
+                    return Direction.West;
+                return Direction.East;
+            }
         }
 
-        private void GoSouth()
+        private Move GoNorth()
         {
-            MoveLastTailPartToHeadPosition(Direction.South);
-            head.Reposition(head.X, head.Y - 1, Direction.South);
-            head.SetDownStream(Direction.North);
+            return new Move(this, Direction.North, head.X, head.Y + 1);
         }
 
-        private void GoWest()
+
+
+        private Move GoEast()
         {
-            MoveLastTailPartToHeadPosition(Direction.West);
-            head.Reposition(head.X - 1, head.Y , Direction.West);
-            head.SetDownStream(Direction.East);
+            return new Move(this, Direction.East, head.X + 1, head.Y);
+        }
+
+        private Move GoSouth()
+        {
+            return new Move(this, Direction.South, head.X, head.Y - 1);
+        }
+
+        private Move GoWest()
+        {
+            return new Move(this, Direction.West, head.X - 1, head.Y);
         }
 
         private void MoveLastTailPartToHeadPosition(Direction direction)

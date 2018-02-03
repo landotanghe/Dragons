@@ -25,15 +25,15 @@ public class GameStateManager : MonoBehaviour
         _actionExecutor = null;
 
         whiteDragon.head.Reposition(1, 6, Direction.North);
-        whiteDragon.MoveForwards(board);
-        whiteDragon.TurnLeft(board);
-        whiteDragon.TurnLeft(board);
+        whiteDragon.MoveForwards(board).Execute();
+        whiteDragon.TurnLeft(board).Execute();
+        whiteDragon.TurnLeft(board).Execute();
 
         blackDragon.head.Reposition(5, 1, Direction.East);
-        blackDragon.MoveForwards(board);
-        blackDragon.MoveForwards(board);
-        blackDragon.TurnRight(board);
-        blackDragon.TurnRight(board);
+        blackDragon.MoveForwards(board).Execute();
+        blackDragon.MoveForwards(board).Execute();
+        blackDragon.TurnRight(board).Execute();
+        blackDragon.TurnRight(board).Execute();
     }
 
 
@@ -54,31 +54,23 @@ public class GameStateManager : MonoBehaviour
 
     private void CheckInput(KeyCode keyPressed)
     {
+        Dragon.Move move = null;
         if(keyPressed == KeyCode.LeftArrow)
         {
-            Debug.Log("left");
-            if (_currentPlayer.CanTurnLeft(board))
-            {
-                _currentPlayer.TurnLeft(board);
-                SwitchPlayer();
-            }
+            move = _currentPlayer.TurnLeft(board);
         }else if(keyPressed == KeyCode.RightArrow)
         {
-            Debug.Log("right");
-            if (_currentPlayer.CanTurnRight(board))
-            {
-                _currentPlayer.TurnRight(board);
-                SwitchPlayer();
-            }
+            move = _currentPlayer.TurnRight(board);
         }
         else if (keyPressed == KeyCode.UpArrow)
         {
-            Debug.Log("forward");
-            if (_currentPlayer.CanMoveForwards(board))
-            {
-                _currentPlayer.MoveForwards(board);
-                SwitchPlayer();
-            }
+            move = _currentPlayer.MoveForwards(board);
+        }
+
+        if(move!= null && move.CanExecute(board))
+        {
+            move.Execute();
+            SwitchPlayer();
         }
 
         var selectedElementIndex = keyPressed - FirstElementKeyCode;
