@@ -7,16 +7,9 @@ namespace Assets.Dragons
         public int X { get; private set; }
         public int Y { get; private set; }
 
-        private Direction _upStream;
-        private Direction _downStream;
-
-        public Direction Heading
-        {
-            get
-            {
-                return _upStream;
-            }
-        }
+        public Direction Direction { get; private set; }
+        public Direction DownStream { get; private set; }
+        
 
         private const float LeftMost = -6f;
         private const float RightMost = 5.2f;
@@ -30,7 +23,12 @@ namespace Assets.Dragons
         {
             X = x;
             Y = y;
-            _upStream = upStream;
+            Direction = upStream;
+        }
+
+        public void SetDownStream(Direction direction)
+        {
+            DownStream = direction;
         }
 
         private const float TileWidth = Width / 7.0f;
@@ -57,7 +55,7 @@ namespace Assets.Dragons
         public void FixedUpdate()
         {
             transform.position = new Vector3(DisplayX, DisplayY, 0.0f);
-            var rotation = GetDisplayRotationInDegrees(_upStream, _downStream);
+            var rotation = GetDisplayRotationInDegrees(Direction, DownStream);
             transform.rotation = Quaternion.AngleAxis(rotation, Vector3.forward);
         }
     }

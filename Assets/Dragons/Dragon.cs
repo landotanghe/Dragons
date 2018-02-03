@@ -29,76 +29,103 @@ namespace Assets.Dragons
 
         public void TurnLeft(Board board)
         {
-            if(head.Heading == Direction.East)
+            if(head.Direction == Direction.East)
             {
                 GoNorth();
-            }else if(head.Heading == Direction.North)
+            }else if(head.Direction == Direction.North)
             {
                 GoWest();
-            }else if(head.Heading == Direction.West)
+            }else if(head.Direction == Direction.West)
             {
                 GoSouth();
-            }else if(head.Heading == Direction.South)
+            }else if(head.Direction == Direction.South)
             {
                 GoEast();
             }
-            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Heading);
+            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Direction);
         }
 
         public void TurnRight(Board board)
         {
-            if (head.Heading == Direction.East)
+            if (head.Direction == Direction.East)
             {
                 GoSouth();
-            }else if (head.Heading == Direction.North)
+            }else if (head.Direction == Direction.North)
             {
                 GoEast();
-            }else if (head.Heading == Direction.West)
+            }else if (head.Direction == Direction.West)
             {
                 GoNorth();
-            }else if (head.Heading == Direction.South)
+            }else if (head.Direction == Direction.South)
             {
                 GoWest();
             }
-            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Heading);
+            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Direction);
         }
 
         public void MoveForwards(Board board)
         {
-            if (head.Heading == Direction.East)
+            if (head.Direction == Direction.East)
             {
                 GoEast();
-            }else if (head.Heading == Direction.North)
+            }else if (head.Direction == Direction.North)
             {
                 GoNorth();
-            }else if (head.Heading == Direction.West)
+            }else if (head.Direction == Direction.West)
             {
                 GoWest();
-            }else if (head.Heading == Direction.South)
+            }else if (head.Direction == Direction.South)
             {
                 GoSouth();
             }
-            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Heading);
+            Debug.Log("(" + head.X + ", " + head.Y + ")" + head.Direction);
         }
 
         private void GoNorth()
         {
+            MoveLastTailPartToHeadPosition(Direction.North);
             head.Reposition(head.X, head.Y + 1, Direction.North);
         }
 
+
         private void GoEast()
         {
+            MoveLastTailPartToHeadPosition(Direction.East);
             head.Reposition(head.X + 1, head.Y, Direction.East);
         }
 
         private void GoSouth()
         {
+            MoveLastTailPartToHeadPosition(Direction.South);
             head.Reposition(head.X, head.Y - 1, Direction.South);
         }
 
         private void GoWest()
         {
+            MoveLastTailPartToHeadPosition(Direction.West);
             head.Reposition(head.X - 1, head.Y , Direction.West);
+        }
+
+        private void MoveLastTailPartToHeadPosition(Direction direction)
+        {
+            if (tail.Length == 0)
+                return;
+
+            MoveLastTailPartToHeadPosition();
+
+            tail[0].Reposition(head.X, head.Y, direction);
+            tail[0].SetDownStream(head.DownStream);
+        }
+
+        private void MoveLastTailPartToHeadPosition()
+        {
+            var lastTailPart = tail[tail.Length - 1];
+
+            for (int i = tail.Length - 1; i > 0; i--)
+            {
+                tail[i] = tail[i - 1];
+            }
+            tail[0] = lastTailPart;
         }
     }
 }
