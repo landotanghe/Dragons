@@ -6,8 +6,9 @@ using UnityEngine;
 
 namespace Assets
 {
-    public abstract class IAction : MonoBehaviour
+    public abstract class WheelElementAction : MonoBehaviour
     {
+
         public bool CanExecute(Dragon dragon, Board board)
         {
             var firstMove = GetAvailableOptions(dragon, board)[0];
@@ -27,17 +28,17 @@ namespace Assets
 
         private static void RemoveInvalidMoves(Dragon dragon, Board board, AvailableOptions[] availableOptions)
         {
-            if (!dragon.MoveForwards(board).CanExecute(board))
+            if (!dragon.MoveForwards().CanExecute())
             {
                 RemoveOption(availableOptions, Option.Left);
             }
 
-            if (!dragon.TurnRight(board).CanExecute(board))
+            if (!dragon.TurnRight().CanExecute())
             {
                 RemoveOption(availableOptions, Option.Right);
             }
 
-            if (!dragon.MoveForwards(board).CanExecute(board))
+            if (!dragon.MoveForwards().CanExecute())
             {
                 RemoveOption(availableOptions, Option.Forward);
             }
@@ -61,13 +62,13 @@ namespace Assets
                     case Option.NoOperation:
                         return;
                     case Option.Left:
-                        dragon.TurnLeft(board);
+                        dragon.TurnLeft();
                         return;
                     case Option.Right:
-                        dragon.TurnRight(board);
+                        dragon.TurnRight();
                         return;
                     case Option.Forward:
-                        dragon.MoveForwards(board);
+                        dragon.MoveForwards();
                         return;
                     case Option.ConsumeFire:
                         return;

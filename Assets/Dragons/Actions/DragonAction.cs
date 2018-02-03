@@ -1,8 +1,17 @@
 ﻿namespace Assets.Dragons
 {
-    public interface DragonAction
+    public abstract class DragonAction
     {
-        bool CanExecute(Board board);
-        void Execute(Board board);
+        protected Dragon Dragon { get; private set; }
+        protected Board Board { get; private set; }
+
+        public DragonAction(Dragon dragon)
+        {
+            Board = dragon.board;
+            Dragon = dragon;
+        }
+
+        public abstract bool CanExecute();
+        public abstract void Execute();
     }
 }

@@ -10,7 +10,7 @@ namespace Assets.Dragons
 
         public override Damage ExpelElement(Board board)
         {
-            var exhaledFire = _dragon.ExhaleFire();
+            var exhaledFire = Dragon.ExhaleFire();
             board.AddFireToPool(exhaledFire);
 
             var fireDamage = Damage.FromValue(exhaledFire.Amount);

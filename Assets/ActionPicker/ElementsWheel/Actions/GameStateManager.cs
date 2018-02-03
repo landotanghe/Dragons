@@ -25,15 +25,15 @@ public class GameStateManager : MonoBehaviour
         _actionExecutor = null;
 
         whiteDragon.head.Reposition(new Location(1, 6), Direction.North);
-        whiteDragon.MoveForwards(board).Execute(board);
-        whiteDragon.TurnLeft(board).Execute(board);
-        whiteDragon.TurnLeft(board).Execute(board);
+        whiteDragon.MoveForwards().Execute();
+        whiteDragon.TurnLeft().Execute();
+        whiteDragon.TurnLeft().Execute();
 
         blackDragon.head.Reposition(new Location(5, 1), Direction.East);
-        blackDragon.MoveForwards(board).Execute(board);
-        blackDragon.MoveForwards(board).Execute(board);
-        blackDragon.TurnRight(board).Execute(board);
-        blackDragon.TurnRight(board).Execute(board);
+        blackDragon.MoveForwards().Execute();
+        blackDragon.MoveForwards().Execute();
+        blackDragon.TurnRight().Execute();
+        blackDragon.TurnRight().Execute();
     }
 	
 	// Update is called once per frame
@@ -55,19 +55,19 @@ public class GameStateManager : MonoBehaviour
         DragonAction action = null;
         if(keyPressed == KeyCode.LeftArrow)
         {
-            action = _currentPlayer.TurnLeft(board);
+            action = _currentPlayer.TurnLeft();
         }else if(keyPressed == KeyCode.RightArrow)
         {
-            action = _currentPlayer.TurnRight(board);
+            action = _currentPlayer.TurnRight();
         }
         else if (keyPressed == KeyCode.UpArrow)
         {
-            action = _currentPlayer.MoveForwards(board);
+            action = _currentPlayer.MoveForwards();
         }
 
-        if(action!= null && action.CanExecute(board))
+        if(action!= null && action.CanExecute())
         {
-            action.Execute(board);
+            action.Execute();
             SwitchPlayer();
         }
 

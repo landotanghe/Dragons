@@ -5,34 +5,32 @@ namespace Assets.Dragons
 {
     public abstract class ExpelElementAction : DragonAction
     {
-        protected Dragon _dragon;
         protected Location _fullDamageLocation;
         protected Location[] _partialDamageLocations;
         protected Location _noDistanceDamageLocation;
 
-        public ExpelElementAction(Dragon dragon)
+        public ExpelElementAction(Dragon dragon) : base(dragon)
         {
-            _dragon = dragon;
-            _fullDamageLocation = _dragon.head.Location + _dragon.head.Direction;
+            _fullDamageLocation = Dragon.head.Location + Dragon.head.Direction;
             _partialDamageLocations = new[]
             {
-                    _fullDamageLocation + _dragon.head.Direction,
-                    _fullDamageLocation + _dragon.head.Direction.TurnLeft(),
-                    _fullDamageLocation + _dragon.head.Direction.TurnRight(),
+                    _fullDamageLocation + Dragon.head.Direction,
+                    _fullDamageLocation + Dragon.head.Direction.TurnLeft(),
+                    _fullDamageLocation + Dragon.head.Direction.TurnRight(),
                 };
             _noDistanceDamageLocation = _fullDamageLocation
-                + _dragon.head.Direction
-                + _dragon.head.Direction;
+                + Dragon.head.Direction
+                + Dragon.head.Direction;
         }
 
-        public bool CanExecute(Board board)
+        public override bool CanExecute()
         {
-            return CanReachEnemy(board);
+            return CanReachEnemy();
         }
 
-        protected Damage DistanceDamage(Board board)
+        protected Damage DistanceDamage()
         {
-            var target = board.GetOpponentOf(_dragon);
+            var target = Board.GetOpponentOf(Dragon);
             if (target.Occupies(_fullDamageLocation))
                 return Damage.FromValue(2);
             if (_partialDamageLocations.Any(location => target.Occupies(location)))
@@ -40,23 +38,23 @@ namespace Assets.Dragons
             return Damage.None;
         }
 
-        private bool CanReachEnemy(Board board)
+        private bool CanReachEnemy()
         {
-            var target = board.GetOpponentOf(_dragon);
+            var target = Board.GetOpponentOf(Dragon);
 
             return target.Occupies(_fullDamageLocation) ||
-                _partialDamageLocations.Any(location => target.Occupies(location)) && board.IsFreeSpace(_fullDamageLocation) ||
-                target.Occupies(_noDistanceDamageLocation) && board.IsFreeSpace(_fullDamageLocation) && board.IsFreeSpace(_partialDamageLocations[0]);
+                _partialDamageLocations.Any(location => target.Occupies(location)) && Board.IsFreeSpace(_fullDamageLocation) ||
+                target.Occupies(_noDistanceDamageLocation) && Board.IsFreeSpace(_fullDamageLocation) && Board.IsFreeSpace(_partialDamageLocations[0]);
         }
 
-        public void Execute(Board board)
+        public override void Execute()
         {
-            var target = board.GetOpponentOf(_dragon);
+            var target = Board.GetOpponentOf(Dragon);
 
-            var distanceDamage = DistanceDamage(board);
-            var expelDamage = ExpelElement(board);
+            var distanceDamage = DistanceDamage();
+            var expelDamage = ExpelElement(Board);
 
-            target.TakeDamage(distanceDamage + expelDamage, board);
+            target.TakeDamage(distanceDamage + expelDamage);
         }
 
         public abstract Damage ExpelElement(Board board);

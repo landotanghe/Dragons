@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Element : MonoBehaviour {
-    public IAction action;
+    public WheelElementAction action;
 
     public int discStackSize;
 

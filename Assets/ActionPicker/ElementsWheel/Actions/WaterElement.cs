@@ -1,9 +1,8 @@
 ﻿using Assets.ActionPicker.ElementsWheel.Actions;
-using Assets.Dragons;
 
 namespace Assets
 {
-    public class WaterAction : IAction
+    public class WaterElement : WheelElementAction
     {        
         protected override AvailableOptions[] GetAvailableOptions()
         {

@@ -8,12 +8,12 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
         private Dragon dragon;
         private Board board;
 
-        private IAction _action;
+        private WheelElementAction _action;
         private Option[] _options;
         private int nextOptionToChoose = 0;
         private AvailableOptions[] _availableOptions;
 
-        public ActionExecutor(IAction action, Dragon dragon, Board board)
+        public ActionExecutor(WheelElementAction action, Dragon dragon, Board board)
         {
             _availableOptions = _action.GetAvailableOptions(dragon, board);
 

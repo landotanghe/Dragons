@@ -26,7 +26,7 @@ namespace Assets.ActionPicker.ElementsWheel
             return GetDiscsAt(position) != 0;
         }
 
-        public IAction GetActionFor(int pickupLocation)
+        public WheelElementAction GetActionFor(int pickupLocation)
         {
             var actionPosition = (GetDiscsAt(pickupLocation) + pickupLocation) % elements.Length;
             return elements[actionPosition].action;

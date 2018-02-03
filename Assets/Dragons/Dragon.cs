@@ -7,10 +7,12 @@ namespace Assets.Dragons
 {
     public class Dragon : MonoBehaviour
     {
-        private Health _tailHealth;
-        private Fire _consumedFire;
         public Head head;
         public TailSegment[] tail;
+        public Board board;
+
+        private Health _tailHealth;
+        private Fire _consumedFire;
         
         public Dragon()
         {
@@ -22,7 +24,7 @@ namespace Assets.Dragons
         {
         }
 
-        public void TakeDamage(Damage damage, Board board)
+        public void TakeDamage(Damage damage)
         {
             while (!_tailHealth.CanBear(damage) && IsAlive())
             {
@@ -47,7 +49,7 @@ namespace Assets.Dragons
             return tail.Any();
         }
         
-        public Move TurnLeft(Board board)
+        public Move TurnLeft()
         {
             if(head.Direction == Direction.East)
             {
@@ -71,7 +73,7 @@ namespace Assets.Dragons
                 tail.Any(part => part.Occupies(location));
         }
 
-        public Move TurnRight(Board board)
+        public Move TurnRight()
         {
             if (head.Direction == Direction.East)
             {
@@ -89,7 +91,7 @@ namespace Assets.Dragons
             throw new NotImplementedException();
         }
 
-        public Move MoveForwards(Board board)
+        public Move MoveForwards()
         {
             if (head.Direction == Direction.East)
             {

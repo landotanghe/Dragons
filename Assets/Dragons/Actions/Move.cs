@@ -2,25 +2,23 @@
 {
     public class Move : DragonAction
     {
-        private Dragon _dragon;
         public Direction Direction { get; private set; }
         public Location _target;
 
-        public Move(Dragon dragon, Direction direction)
+        public Move(Dragon dragon, Direction direction) : base(dragon)
         {
-            _dragon = dragon;
             Direction = direction;
-            _target = _dragon.head.Location + direction;
+            _target = Dragon.head.Location + direction;
         }
 
-        public bool CanExecute(Board board)
+        public override bool CanExecute()
         {
-            return board.IsFreeSpace(_target);
+            return Board.IsFreeSpace(_target);
         }
 
-        public void Execute(Board board)
+        public override void Execute()
         {
-            _dragon.MoveTo(_target, Direction);
+            Dragon.MoveTo(_target, Direction);
         }
     }
 }
