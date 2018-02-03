@@ -24,19 +24,17 @@ public class GameStateManager : MonoBehaviour
         isSecondMove = false;
         _actionExecutor = null;
 
-        whiteDragon.head.Reposition(1, 6, Direction.North);
-        whiteDragon.MoveForwards(board).Execute();
-        whiteDragon.TurnLeft(board).Execute();
-        whiteDragon.TurnLeft(board).Execute();
+        whiteDragon.head.Reposition(new Location(1, 6), Direction.North);
+        whiteDragon.MoveForwards(board).Execute(board);
+        whiteDragon.TurnLeft(board).Execute(board);
+        whiteDragon.TurnLeft(board).Execute(board);
 
-        blackDragon.head.Reposition(5, 1, Direction.East);
-        blackDragon.MoveForwards(board).Execute();
-        blackDragon.MoveForwards(board).Execute();
-        blackDragon.TurnRight(board).Execute();
-        blackDragon.TurnRight(board).Execute();
+        blackDragon.head.Reposition(new Location(5, 1), Direction.East);
+        blackDragon.MoveForwards(board).Execute(board);
+        blackDragon.MoveForwards(board).Execute(board);
+        blackDragon.TurnRight(board).Execute(board);
+        blackDragon.TurnRight(board).Execute(board);
     }
-
-
 	
 	// Update is called once per frame
 	void Update () {
@@ -54,22 +52,22 @@ public class GameStateManager : MonoBehaviour
 
     private void CheckInput(KeyCode keyPressed)
     {
-        Dragon.Move move = null;
+        DragonAction action = null;
         if(keyPressed == KeyCode.LeftArrow)
         {
-            move = _currentPlayer.TurnLeft(board);
+            action = _currentPlayer.TurnLeft(board);
         }else if(keyPressed == KeyCode.RightArrow)
         {
-            move = _currentPlayer.TurnRight(board);
+            action = _currentPlayer.TurnRight(board);
         }
         else if (keyPressed == KeyCode.UpArrow)
         {
-            move = _currentPlayer.MoveForwards(board);
+            action = _currentPlayer.MoveForwards(board);
         }
 
-        if(move!= null && move.CanExecute(board))
+        if(action!= null && action.CanExecute(board))
         {
-            move.Execute();
+            action.Execute(board);
             SwitchPlayer();
         }
 

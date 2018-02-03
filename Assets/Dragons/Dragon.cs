@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Dragons.Damages;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -6,11 +7,44 @@ namespace Assets.Dragons
 {
     public class Dragon : MonoBehaviour
     {
+        private Health _tailHealth;
+        private Fire _consumedFire;
         public Head head;
-        public Tail[] tail;
+        public TailSegment[] tail;
         
+        public Dragon()
+        {
+            _tailHealth = Health.Full;
+            _consumedFire = Fire.Depleted;
+        }
+
         public void FixedUpdate()
         {
+        }
+
+        private void TakeDamage(Damage damage, Board board)
+        {
+            while (!_tailHealth.CanBear(damage) && IsAlive())
+            {
+                LoseSegment();
+                damage = damage - Damage.FullSegment;
+            }
+
+            if (IsAlive())
+            {
+                _tailHealth = _tailHealth - damage;
+                board.AddWaterToPool(new Water(damage.Value));
+            }
+        }
+
+        private void LoseSegment()
+        {
+            tail = tail.Take(tail.Length - 1).ToArray();
+        }
+        
+        public bool IsAlive()
+        {
+            return tail.Any();
         }
         
         public Move TurnLeft(Board board)
@@ -31,9 +65,10 @@ namespace Assets.Dragons
             throw new NotImplementedException();
         }
 
-        public bool Occupies(int x, int y)
+        public bool Occupies(Location location)
         {
-            return head.Occupies(x, y) || tail.Any(part => part.Occupies(x, y));
+            return head.Occupies(location) || 
+                tail.Any(part => part.Occupies(location));
         }
 
         public Move TurnRight(Board board)
@@ -72,32 +107,130 @@ namespace Assets.Dragons
             throw new NotImplementedException();
         }
 
-
-        public class Move
+        public ExpelFireAction ThrowFire()
         {
-            private Dragon _dragon;
-            public Direction Direction { get; private set; }
-            public int X { get; private set; }
-            public int Y { get; private set; }
+            return new ExpelFireAction(this);
+        }
 
-            public Move(Dragon dragon, Direction direction, int x, int y)
+        public abstract class ExpelElementAction : DragonAction
+        {
+            protected Dragon _dragon;
+            protected Location _fullDamageLocation;
+            protected Location[] _partialDamageLocations;
+            protected Location _noDistanceDamageLocation;
+
+            public ExpelElementAction(Dragon dragon)
             {
                 _dragon = dragon;
-                Direction = direction;
-                X = x;
-                Y = y;
+                _fullDamageLocation = _dragon.head.Location + _dragon.head.Direction;
+                _partialDamageLocations = new[]
+                {
+                    _fullDamageLocation + _dragon.head.Direction,
+                    _fullDamageLocation + _dragon.head.Direction.TurnLeft(),
+                    _fullDamageLocation + _dragon.head.Direction.TurnRight(),
+                };
+                _noDistanceDamageLocation = _fullDamageLocation
+                    + _dragon.head.Direction
+                    + _dragon.head.Direction;
             }
 
             public bool CanExecute(Board board)
             {
-                Debug.Log("Move to " + X + "," + Y + "is allowed: " + board.IsFreeSpace(X, Y));
-                return board.IsFreeSpace(X, Y);
+                return CanReachEnemy(board);
             }
 
-            public void Execute()
+            protected Damage DistanceDamage(Board board)
+            {
+                var target = board.GetOpponentOf(_dragon);
+                if (target.Occupies(_fullDamageLocation))
+                    return Damage.FromValue(2);
+                if (_partialDamageLocations.Any(location => target.Occupies(location)))
+                    return Damage.FromValue(1);
+                return Damage.None;
+            }
+
+            private bool CanReachEnemy(Board board)
+            {
+                var target = board.GetOpponentOf(_dragon);
+
+                return target.Occupies(_fullDamageLocation) ||
+                    _partialDamageLocations.Any(location => target.Occupies(location)) && board.IsFreeSpace(_fullDamageLocation) ||
+                    target.Occupies(_noDistanceDamageLocation) && board.IsFreeSpace(_fullDamageLocation) && board.IsFreeSpace(_partialDamageLocations[0]);
+            }
+
+            public void Execute(Board board)
+            {
+                var target = board.GetOpponentOf(_dragon);
+                
+                var distanceDamage = DistanceDamage(board);
+                var expelDamage = ExpelElement(board);
+
+                target.TakeDamage(distanceDamage + expelDamage, board);
+            }
+
+            public abstract Damage ExpelElement(Board board);
+
+        }
+
+        public class ExpelWaterAction : ExpelElementAction
+        {
+            public ExpelWaterAction(Dragon dragon) : base(dragon)
+            {
+            }
+
+            public override Damage ExpelElement(Board board)
+            {
+                var waterInPool = board.GetWaterInPool();
+                return Damage.FromValue(waterInPool.Amount);
+            }
+        }
+
+        public class ExpelFireAction : ExpelElementAction
+        {
+            public ExpelFireAction(Dragon dragon) : base(dragon)
+            {
+            }
+
+            public override Damage ExpelElement(Board board)
+            {
+                var exhaledFire = _dragon.ExhaleFire();
+                board.AddFireToPool(exhaledFire);
+
+                var fireDamage = Damage.FromValue(exhaledFire.Amount);
+                return fireDamage;
+            }
+        }
+
+        private Fire ExhaleFire()
+        {
+            var fire = _consumedFire;
+            _consumedFire = Fire.Depleted;
+
+            return fire;
+        }
+
+        public class Move : DragonAction
+        {
+            private Dragon _dragon;
+            public Direction Direction { get; private set; }
+            public Location _target;
+
+            public Move(Dragon dragon, Direction direction)
+            {
+                _dragon = dragon;
+                Direction = direction;
+                _target = _dragon.head.Location + direction;
+            }
+
+            public bool CanExecute(Board board)
+            {
+                return board.IsFreeSpace(_target);
+            }
+
+            public void Execute(Board board)
             {
                 _dragon.MoveLastTailPartToHeadPosition(Direction);
-                _dragon.head.Reposition(X, Y, Direction);
+                _dragon.head.Reposition(_target, Direction);
 
                 Direction oppositeDirection = OppositeOf(Direction);
                 _dragon.head.SetDownStream(oppositeDirection);
@@ -117,24 +250,24 @@ namespace Assets.Dragons
 
         private Move GoNorth()
         {
-            return new Move(this, Direction.North, head.X, head.Y + 1);
+            return new Move(this, Direction.North);
         }
 
 
 
         private Move GoEast()
         {
-            return new Move(this, Direction.East, head.X + 1, head.Y);
+            return new Move(this, Direction.East);
         }
 
         private Move GoSouth()
         {
-            return new Move(this, Direction.South, head.X, head.Y - 1);
+            return new Move(this, Direction.South);
         }
 
         private Move GoWest()
         {
-            return new Move(this, Direction.West, head.X - 1, head.Y);
+            return new Move(this, Direction.West);
         }
 
         private void MoveLastTailPartToHeadPosition(Direction direction)
@@ -144,7 +277,7 @@ namespace Assets.Dragons
 
             MoveLastTailPartToHeadPosition();
 
-            tail[0].Reposition(head.X, head.Y, direction);
+            tail[0].Reposition(head.Location, direction);
             tail[0].SetDownStream(head.DownStream);
         }
 

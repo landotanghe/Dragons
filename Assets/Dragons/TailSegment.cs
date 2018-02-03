@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Assets.Dragons
 {
-    public class Tail : BodyPart
+    public class TailSegment : BodyPart
     {
         public GameObject straight;
         public GameObject curved;
 
         public override float GetDisplayRotationInDegrees(Direction upstream, Direction downstream)
         {
-            if((upstream - downstream) % 2 == 0)
+            if(upstream.IsOnSameLineAs(downstream))
             {
                 straight.SetActive(true);
                 curved.SetActive(false);

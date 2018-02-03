@@ -4,9 +4,7 @@ namespace Assets.Dragons
 {
     public abstract class BodyPart : MonoBehaviour
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
-
+        public Location Location { get; private set; }
         public Direction Direction { get; private set; }
         public Direction DownStream { get; private set; }
         
@@ -17,12 +15,16 @@ namespace Assets.Dragons
         private const float TopMost = -4.9f;
         private const float BottomMost = 5.0f;
         private const float Height = BottomMost - TopMost;
+
+        public BodyPart()
+        {
+            Location = new Location(0, 0);
+        }
         
 
-        public void Reposition(int x, int y, Direction upStream)
+        public void Reposition(Location location, Direction upStream)
         {
-            X = x;
-            Y = y;
+            Location = location;
             Direction = upStream;
         }
 
@@ -38,7 +40,7 @@ namespace Assets.Dragons
         {
             get
             {
-                return LeftMost + TileWidth * X;
+                return LeftMost + TileWidth * Location.X;
             }
         }
 
@@ -46,13 +48,13 @@ namespace Assets.Dragons
         {
             get
             {
-                return TopMost + TileHeight * Y;
+                return TopMost + TileHeight * Location.Y;
             }
         }
 
-        public bool Occupies(int x, int y)
+        public bool Occupies(Location location)
         {
-            return X == x && Y == y;
+            return location == Location;
         }
 
         public abstract float GetDisplayRotationInDegrees(Direction upstream, Direction downstream);
