@@ -23,6 +23,17 @@ public class GameStateManager : MonoBehaviour
         _currentPlayer = whiteDragon;
         isSecondMove = false;
         _actionExecutor = null;
+
+        whiteDragon.head.Reposition(1, 6, Direction.North);
+        whiteDragon.MoveForwards(board);
+        whiteDragon.TurnLeft(board);
+        whiteDragon.TurnLeft(board);
+
+        blackDragon.head.Reposition(5, 1, Direction.East);
+        blackDragon.MoveForwards(board);
+        blackDragon.MoveForwards(board);
+        blackDragon.TurnRight(board);
+        blackDragon.TurnRight(board);
     }
 
 
@@ -46,19 +57,28 @@ public class GameStateManager : MonoBehaviour
         if(keyPressed == KeyCode.LeftArrow)
         {
             Debug.Log("left");
-            _currentPlayer.TurnLeft(board);
-            SwitchPlayer();
+            if (_currentPlayer.CanTurnLeft(board))
+            {
+                _currentPlayer.TurnLeft(board);
+                SwitchPlayer();
+            }
         }else if(keyPressed == KeyCode.RightArrow)
         {
             Debug.Log("right");
-            _currentPlayer.TurnRight(board);
-            SwitchPlayer();
+            if (_currentPlayer.CanTurnRight(board))
+            {
+                _currentPlayer.TurnRight(board);
+                SwitchPlayer();
+            }
         }
         else if (keyPressed == KeyCode.UpArrow)
         {
             Debug.Log("forward");
-            _currentPlayer.MoveForwards(board);
-            SwitchPlayer();
+            if (_currentPlayer.CanMoveForwards(board))
+            {
+                _currentPlayer.MoveForwards(board);
+                SwitchPlayer();
+            }
         }
 
         var selectedElementIndex = keyPressed - FirstElementKeyCode;
