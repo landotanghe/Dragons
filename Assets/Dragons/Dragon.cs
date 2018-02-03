@@ -19,11 +19,11 @@ namespace Assets.Dragons
             _tailHealth = Health.Full;
             _consumedFire = Fire.Depleted;
         }
-
+        
         public void FixedUpdate()
         {
         }
-
+        
         public void TakeDamage(Damage damage)
         {
             while (!_tailHealth.CanBear(damage) && IsAlive())
@@ -39,6 +39,26 @@ namespace Assets.Dragons
             }
         }
 
+        public bool CanConsumeFire()
+        {
+            return _consumedFire.Amount < 4;
+        }
+
+        public void Consume(Fire fire)
+        {
+            _consumedFire = _consumedFire + fire;
+        }
+
+        public bool CanConsumeWater()
+        {
+            return _tailHealth.LifePoints < 4;
+        }
+
+        public void Consume(Water water)
+        {
+            _tailHealth = _tailHealth + water;
+        }
+
         private void LoseSegment()
         {
             tail = tail.Take(tail.Length - 1).ToArray();
@@ -51,20 +71,8 @@ namespace Assets.Dragons
         
         public Move TurnLeft()
         {
-            if(head.Direction == Direction.East)
-            {
-                return GoNorth();
-            }else if(head.Direction == Direction.North)
-            {
-                return GoWest();
-            }else if(head.Direction == Direction.West)
-            {
-                return GoSouth();
-            }else if(head.Direction == Direction.South)
-            {
-                return GoEast();
-            }
-            throw new NotImplementedException();
+            var newDirection = head.Direction.TurnLeft();
+            return new Move(this, newDirection);
         }
 
         public bool Occupies(Location location)
@@ -75,38 +83,13 @@ namespace Assets.Dragons
 
         public Move TurnRight()
         {
-            if (head.Direction == Direction.East)
-            {
-                return GoSouth();
-            }else if (head.Direction == Direction.North)
-            {
-                return GoEast();
-            }else if (head.Direction == Direction.West)
-            {
-                return GoNorth();
-            }else if (head.Direction == Direction.South)
-            {
-                return GoWest();
-            }
-            throw new NotImplementedException();
+            var newDirection = head.Direction.TurnRight();
+            return new Move(this, newDirection);
         }
 
         public Move MoveForwards()
         {
-            if (head.Direction == Direction.East)
-            {
-                return GoEast();
-            }else if (head.Direction == Direction.North)
-            {
-                return GoNorth();
-            }else if (head.Direction == Direction.West)
-            {
-                return GoWest();
-            }else if (head.Direction == Direction.South)
-            {
-                return GoSouth();
-            }
-            throw new NotImplementedException();
+            return new Move(this, head.Direction);
         }
 
         public ExpelFireAction ThrowFire()
@@ -121,27 +104,7 @@ namespace Assets.Dragons
 
             return fire;
         }                
-
-        private Move GoNorth()
-        {
-            return new Move(this, Direction.North);
-        }
-
-        private Move GoEast()
-        {
-            return new Move(this, Direction.East);
-        }
-
-        private Move GoSouth()
-        {
-            return new Move(this, Direction.South);
-        }
-
-        private Move GoWest()
-        {
-            return new Move(this, Direction.West);
-        }
-
+        
         public void MoveTo(Location target, Direction direction)
         {
             MoveLastTailPartToHeadPosition(direction);

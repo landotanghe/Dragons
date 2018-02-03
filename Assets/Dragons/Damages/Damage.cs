@@ -25,9 +25,12 @@ namespace Assets.Dragons.Damages
             return new Damage(value);
         }
 
-        public static Damage Bite()
+        public static Damage One
         {
-            return new Damage(1);
+            get
+            {
+               return new Damage(1);
+            }
         }
 
         public static Damage Ranged(int value)

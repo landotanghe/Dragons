@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.ActionPicker.ElementsWheel
 {
@@ -50,8 +49,8 @@ namespace Assets.ActionPicker.ElementsWheel
 
             while (discsInHand.Any())
             {
-                elements[dropLocation].AddDisc();
-                discsInHand.RemoveOne();
+                var disc = discsInHand.RemoveOne();
+                elements[dropLocation].AddDisc(disc);
 
                 dropLocation = GetDropLocationAfter(dropLocation);
             }

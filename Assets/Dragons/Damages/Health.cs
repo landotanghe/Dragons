@@ -36,5 +36,10 @@ namespace Assets.Dragons.Damages
 
             return new Health(health.LifePoints - damage.Value);
         }
+
+        public static Health operator +(Health health, Water water)
+        {
+            return new Health(health.LifePoints + water.Amount);
+        }
     }
 }

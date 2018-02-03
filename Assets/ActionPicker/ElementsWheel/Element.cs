@@ -7,6 +7,7 @@ public class Element : MonoBehaviour {
     public WheelElementAction action;
 
     public int discStackSize;
+    public DiscStack discs;
 
     public int Height
     {
@@ -16,15 +17,13 @@ public class Element : MonoBehaviour {
         }
     }
 
-    public void AddDisc()
+    public void AddDisc(Disc disc)
     {
-
+        discs.Add(disc);
     }
 
-    public Discs TakeAllDiscs()
+    public DiscStack TakeAllDiscs()
     {
-        var discs = new Discs(discStackSize);
-        discStackSize = 0;
         return discs;
     }
 
