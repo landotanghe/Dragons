@@ -19,7 +19,18 @@ namespace Assets.Dragons
 
         public bool IsOnSameLineAs(Direction direction)
         {
-            return (Value - direction.Value) % 2 == 0;
+            return direction!= null && direction.Invert() == this;
+        }
+
+        public Direction Invert()
+        {
+            if (this == North)
+                return South;
+            if (this == South)
+                return North;
+            if (this == East)
+                return West;
+            return East;
         }
 
         public Direction TurnLeft()

@@ -19,6 +19,8 @@ namespace Assets.Dragons
         public BodyPart()
         {
             Location = new Location(0, 0);
+            Direction = Direction.North;
+            Direction = Direction.South;
         }
         
 

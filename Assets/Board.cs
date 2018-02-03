@@ -54,7 +54,7 @@ namespace Assets
             return Water.One;
         }
 
-        internal void AddWaterToPool(Water water)
+        public void AddWaterToPool(Water water)
         {
             _waterPool = _waterPool + water;
         }
@@ -68,7 +68,7 @@ namespace Assets
             return Fire.One;
         }
 
-        internal void AddFireToPool(Fire exhaledFire)
+        public void AddFireToPool(Fire exhaledFire)
         {
             _firePool = _firePool + exhaledFire;
         }

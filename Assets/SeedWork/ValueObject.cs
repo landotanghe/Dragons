@@ -22,6 +22,11 @@ namespace Assets.SeedWork
 
         public static bool operator ==(ValueObject one, object other)
         {
+            if (ReferenceEquals(one, null))
+            {
+                return ReferenceEquals(other, null);
+            }
+
             return one.Equals(other);
         }
 
