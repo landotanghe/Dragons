@@ -28,7 +28,6 @@ namespace Assets.Dragons
                 var directions = new[] { upstream, downstream };
                 if (directions.Contains(Direction.North))
                 {
-                    Debug.Log("Curved N");
                     if(directions.Contains(Direction.East))
                     {
                         return 90;
@@ -37,7 +36,6 @@ namespace Assets.Dragons
                 }
                 else
                 {
-                    Debug.Log("curved S");
                     if (directions.Contains(Direction.East))
                     {
                         return 0;

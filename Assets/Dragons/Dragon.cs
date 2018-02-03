@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Dragons
@@ -28,6 +29,11 @@ namespace Assets.Dragons
                 return GoEast();
             }
             throw new NotImplementedException();
+        }
+
+        public bool Occupies(int x, int y)
+        {
+            return head.Occupies(x, y) || tail.Any(part => part.Occupies(x, y));
         }
 
         public Move TurnRight(Board board)
@@ -84,7 +90,8 @@ namespace Assets.Dragons
 
             public bool CanExecute(Board board)
             {
-                return true;
+                Debug.Log("Move to " + X + "," + Y + "is allowed: " + board.IsFreeSpace(X, Y));
+                return board.IsFreeSpace(X, Y);
             }
 
             public void Execute()

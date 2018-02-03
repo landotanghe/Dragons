@@ -50,6 +50,11 @@ namespace Assets.Dragons
             }
         }
 
+        public bool Occupies(int x, int y)
+        {
+            return X == x && Y == y;
+        }
+
         public abstract float GetDisplayRotationInDegrees(Direction upstream, Direction downstream);
 
         public void FixedUpdate()
