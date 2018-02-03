@@ -85,6 +85,7 @@ namespace Assets.Dragons
         {
             MoveLastTailPartToHeadPosition(Direction.North);
             head.Reposition(head.X, head.Y + 1, Direction.North);
+            head.SetDownStream(Direction.South);
         }
 
 
@@ -92,18 +93,21 @@ namespace Assets.Dragons
         {
             MoveLastTailPartToHeadPosition(Direction.East);
             head.Reposition(head.X + 1, head.Y, Direction.East);
+            head.SetDownStream(Direction.West);
         }
 
         private void GoSouth()
         {
             MoveLastTailPartToHeadPosition(Direction.South);
             head.Reposition(head.X, head.Y - 1, Direction.South);
+            head.SetDownStream(Direction.North);
         }
 
         private void GoWest()
         {
             MoveLastTailPartToHeadPosition(Direction.West);
             head.Reposition(head.X - 1, head.Y , Direction.West);
+            head.SetDownStream(Direction.East);
         }
 
         private void MoveLastTailPartToHeadPosition(Direction direction)
