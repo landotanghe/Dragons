@@ -2,8 +2,9 @@
 {
     public class Tail : BodyPart
     {
-        public override void DisplayRotation(Direction upstream, Direction downstream)
+        public override float GetDisplayRotationInDegrees(Direction upstream, Direction downstream)
         {
+            return 0;
         }
     }
 }

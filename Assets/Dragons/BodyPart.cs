@@ -33,12 +33,32 @@ namespace Assets.Dragons
             _upStream = upStream;
         }
 
-        public abstract void DisplayRotation(Direction upstream, Direction downstream);
+        private const float TileWidth = Width / 7.0f;
+        private const float TileHeight = Height / 7.0f;
+
+        public float DisplayX
+        {
+            get
+            {
+                return LeftMost + TileWidth * X;
+            }
+        }
+
+        public float DisplayY
+        {
+            get
+            {
+                return TopMost + TileHeight * Y;
+            }
+        }
+
+        public abstract float GetDisplayRotationInDegrees(Direction upstream, Direction downstream);
 
         public void FixedUpdate()
         {
-            transform.position = new Vector3(LeftMost + Width * X / 7.0f, TopMost + Height * Y / 7.0f, 0.0f);
-            DisplayRotation(_upStream, _downStream);
+            transform.position = new Vector3(DisplayX, DisplayY, 0.0f);
+            var rotation = GetDisplayRotationInDegrees(_upStream, _downStream);
+            transform.rotation = Quaternion.AngleAxis(rotation, Vector3.forward);
         }
     }
 }
