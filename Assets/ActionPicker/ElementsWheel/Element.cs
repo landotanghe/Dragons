@@ -17,6 +17,10 @@ public class Element : MonoBehaviour {
         }
     }
 
+    public void OnMouseDown()
+    {
+        Debug.Log("mouse down");
+    }
     public void AddDisc(Disc disc)
     {
         discs.Add(disc);

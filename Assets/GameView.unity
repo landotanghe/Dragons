@@ -1235,6 +1235,7 @@ MonoBehaviour:
   - {fileID: 502761147}
   - {fileID: 328478412}
   - {fileID: 1702198731}
+  board: {fileID: 550667900}
 --- !u!114 &1006937005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2040,8 +2041,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 773524322}
+  action: {fileID: 0}
   discStackSize: 0
+  discs: {fileID: 0}
 --- !u!4 &1841006961 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4388238081196710, guid: a5330d181b26c7542b419fe370c11d19,
@@ -2085,6 +2087,7 @@ MonoBehaviour:
   - {fileID: 1220785283}
   - {fileID: 1841006962}
   - {fileID: 931978842}
+  board: {fileID: 550667900}
 --- !u!4 &1876224651
 Transform:
   m_ObjectHideFlags: 0

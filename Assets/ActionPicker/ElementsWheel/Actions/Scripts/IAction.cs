@@ -8,7 +8,6 @@ namespace Assets
 {
     public abstract class WheelElementAction : MonoBehaviour
     {
-
         public bool CanExecute(Dragon dragon, Board board)
         {
             var firstMove = GetAvailableOptions(dragon, board)[0];
