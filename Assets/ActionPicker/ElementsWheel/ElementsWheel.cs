@@ -41,15 +41,15 @@ namespace Assets.ActionPicker.ElementsWheel
         {
             DebugWheel();
 
-            var discs = element.discs;
+            var discs = element.discs.RemoveAll();
             var dropLocation = element;
 
             Debug.Log("moving discs");
-            while (discs.Any())
+            for(int i= 0; i< discs.Length; i++)
             {
                 dropLocation = _counterClockWiseElements[dropLocation];
 
-                var disc = discs.RemoveOne();
+                var disc = discs[i];
                 dropLocation.AddDisc(disc);
             }
             return dropLocation.action;

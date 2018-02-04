@@ -16,10 +16,10 @@ namespace Assets.ActionPicker.ElementsWheel
             }
         }
         
-        public Disc RemoveOne()
+        public Disc[] RemoveAll()
         {
-            var removed = discs.Last();
-            discs = discs.Take(discs.Length - 1).ToArray();
+            var removed = discs;
+            discs = new Disc[0];
 
             return removed;
         }
@@ -27,7 +27,7 @@ namespace Assets.ActionPicker.ElementsWheel
         public void Add(Disc disc)
         {
             disc.transform.SetParent(transform);
-            disc.transform.position = transform.position + new Vector3(0, 0.35f * Count, 0);
+            disc.transform.position = transform.position + new Vector3(0, 0.3f + 0.35f * Count, 0);
 
             var changedDiscs = discs.ToList();
             changedDiscs.Add(disc);
