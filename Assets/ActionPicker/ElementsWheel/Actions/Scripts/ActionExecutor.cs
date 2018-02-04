@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Assets.Dragons;
 
 namespace Assets.ActionPicker.ElementsWheel.Actions
@@ -9,39 +10,30 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
         private Board board;
 
         private WheelElementAction _action;
-        private Option[] _options;
-        private int nextOptionToChoose = 0;
+        private Option nextOption;
+
         private AvailableOptions[] _availableOptions;
 
         public ActionExecutor(WheelElementAction action, Dragon dragon, Board board)
         {
             _availableOptions = _action.GetAvailableOptions(dragon, board);
-
             _action = action;
-            _options = new Option[_availableOptions.Length];
         }
-
-        public bool IsValidOption(int optionIndex)
+        
+        public void PickOption(string optionName)
         {
-            return optionIndex >= 0
-                && nextOptionToChoose < _availableOptions.Length
-                && optionIndex < _availableOptions[nextOptionToChoose].Options.Length;
-        }
-
-        public void PickOption(int optionToPick)
-        {
-            _options[nextOptionToChoose] = _availableOptions[nextOptionToChoose].Options[optionToPick];
-            nextOptionToChoose++;
+            nextOption = _availableOptions[0].For(dragon)
+                .FirstOrDefault(o => o.Name == optionName);
         }
 
         public Option[] GetAvailableOptions()
         {
-            return _availableOptions[nextOptionToChoose].Options;
+            return _availableOptions[0].For(dragon);
         }
 
         public bool CanExecute()
         {
-            return nextOptionToChoose == _options.Length;
+            return nextOption != null && _availableOptions.First().For(dragon).Contains(nextOption);
         }
 
         public bool HasAdditionalMove()
@@ -49,9 +41,15 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
             return false;
         }
 
-        public void Execute()
+        public void ExecuteNextOption()
         {
-            _action.Execute(dragon, board, _options);
+            if(nextOption != null && _availableOptions.First().For(dragon).Contains(nextOption))
+            {
+                nextOption.Execute(dragon);
+
+                _availableOptions = _availableOptions.Skip(1).ToArray();
+                nextOption = null;
+            }
         }
     }
 }

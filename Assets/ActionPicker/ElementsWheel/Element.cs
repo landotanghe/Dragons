@@ -1,36 +1,27 @@
 ﻿using Assets;
 using Assets.ActionPicker.ElementsWheel;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Element : MonoBehaviour {
     public WheelElementAction action;
-
-    public int discStackSize;
+    public ElementsWheel wheel;    
     public DiscStack discs;
-
-    public int Height
-    {
-        get
-        {
-            return discStackSize;
-        }
-    }
-
+    
     public void OnMouseDown()
     {
-        Debug.Log("mouse down");
+        wheel.DropOff(this);
     }
+
     public void AddDisc(Disc disc)
     {
+        if (disc == null)
+            throw new ArgumentNullException();
+
         discs.Add(disc);
     }
-
-    public DiscStack TakeAllDiscs()
-    {
-        return discs;
-    }
-
+    
     // Use this for initialization
     void Start () {
 		
@@ -47,6 +38,6 @@ public class Element : MonoBehaviour {
 
         if (countDisplayText == null)
             return; 
-        countDisplayText.text = "" + discStackSize;
+        countDisplayText.text = "" + discs.Count;
 	}
 }

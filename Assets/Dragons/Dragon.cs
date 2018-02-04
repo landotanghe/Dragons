@@ -1,4 +1,5 @@
-﻿using Assets.Dragons.Damages;
+﻿using Assets.Dragons.Actions;
+using Assets.Dragons.Damages;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -37,6 +38,11 @@ namespace Assets.Dragons
                 _tailHealth = _tailHealth - damage;
                 board.AddWaterToPool(new Water(damage.Value));
             }
+        }
+
+        public DragonAction DoNothing()
+        {
+            return new DoNothing(this);
         }
 
         public bool CanConsumeFire()
@@ -92,10 +98,25 @@ namespace Assets.Dragons
             return new Move(this, head.Direction);
         }
 
-        public ExpelFireAction ThrowFire()
+        public ExpelFireAction ExpelFire()
         {
             return new ExpelFireAction(this);
-        }                      
+        }          
+        
+        public ExpelWaterAction ExpelWater()
+        {
+            return new ExpelWaterAction(this);
+        }
+
+        public ConsumeWaterAction ConsumeWater()
+        {
+            return new ConsumeWaterAction(this);
+        }
+
+        public ConsumeFireAction ConsumeFire()
+        {
+            return new ConsumeFireAction(this);
+        }
 
         public Fire ExhaleFire()
         {

@@ -1,28 +1,29 @@
-﻿using System;
+﻿using Assets.Dragons;
+using System;
 using System.Linq;
 
 namespace Assets.ActionPicker.ElementsWheel.Actions
 {
     public class AvailableOptions
     {
-        public Option[] Options { get; set; }
+        private Option[] _options;
 
         public static AvailableOptions Are(params Option[] options)
         {
             return new AvailableOptions
             {
-                Options = options
+                _options = options
             };
         }
-
-        public void RemoveOption(Option optionToRemove)
-        {
-            Options = Options.Where(o => o != Option.Left).ToArray();
-        }
-
+        
         internal static AvailableOptions AnyMove()
         {
             return AvailableOptions.Are(Option.Left, Option.Right, Option.Forward);
+        }
+
+        public Option[] For(Dragon dragon)
+        {
+            return _options.Where(o => o.CanExecute(dragon)).ToArray();
         }
     }
 }

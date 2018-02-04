@@ -26,6 +26,9 @@ namespace Assets.ActionPicker.ElementsWheel
 
         public void Add(Disc disc)
         {
+            disc.transform.SetParent(transform);
+            disc.transform.position = transform.position + new Vector3(0, 0.35f * Count, 0);
+
             var changedDiscs = discs.ToList();
             changedDiscs.Add(disc);
             discs = changedDiscs.ToArray();

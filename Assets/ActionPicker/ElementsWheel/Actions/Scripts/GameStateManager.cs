@@ -52,22 +52,41 @@ public class GameStateManager : MonoBehaviour
 
     private void CheckInput(KeyCode keyPressed)
     {
-        DragonAction action = null;
+        Option option = null;
         if(keyPressed == KeyCode.LeftArrow)
         {
-            action = _currentPlayer.TurnLeft();
+            option = Option.Left;
         }else if(keyPressed == KeyCode.RightArrow)
         {
-            action = _currentPlayer.TurnRight();
+            option = Option.Right;
         }
         else if (keyPressed == KeyCode.UpArrow)
         {
-            action = _currentPlayer.MoveForwards();
+            option = Option.Forward;
+        }
+        else if (keyPressed == KeyCode.Space)
+        {
+            option = Option.NoOperation;
+        }
+        else if(keyPressed == KeyCode.F)
+        {
+            option = Option.AttackWithFire;
+        }
+        else if(keyPressed == KeyCode.S)
+        {
+            option = Option.AttackWithWater;
+        }
+        else if(keyPressed == KeyCode.D)
+        {
+            option = Option.ConsumeWater;
+        }else if (keyPressed == KeyCode.E)
+        {
+            option = Option.ConsumeFire;
         }
 
-        if(action!= null && action.CanExecute())
+        if(option != null && option.CanExecute(_currentPlayer))
         {
-            action.Execute();
+            option.Execute(_currentPlayer);
             SwitchPlayer();
         }
 
@@ -86,7 +105,7 @@ public class GameStateManager : MonoBehaviour
             //Debug.Log("Selecting options for action " + selectedElementIndex);
             if(_actionExecutor.CanExecute())
             {
-                _actionExecutor.Execute();
+                _actionExecutor.ExecuteNextOption();
                 ChoosePlayerForNextTurn();
 
                 _actionExecutor = null;
@@ -117,8 +136,7 @@ public class GameStateManager : MonoBehaviour
         if (CanMoveDiscsFrom(selectedDiscPosition))
         {
            // Debug.Log("moving disc from " + selectedDiscPosition);
-            var actionIndex = elementsWheel.MoveDiscsFrom(selectedDiscPosition);
-            var action = elementsWheel.elements[actionIndex].action;
+            var action = elementsWheel.DropOff(elementsWheel.elements[selectedDiscPosition]);
 
             _actionExecutor = new ActionExecutor(action, whiteDragon, board);
         }

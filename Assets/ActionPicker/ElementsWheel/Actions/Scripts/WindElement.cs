@@ -1,9 +1,7 @@
-﻿using Assets.ActionPicker.ElementsWheel.Actions;
-
-namespace Assets
+﻿namespace Assets.ActionPicker.ElementsWheel.Actions.Scripts
 {
-    public class WaterElement : WheelElementAction
-    {        
+    public class WindElement : WheelElementAction
+    {
         protected override AvailableOptions[] GetAvailableOptions()
         {
             return new[]
@@ -11,6 +9,6 @@ namespace Assets
                 AvailableOptions.AnyMove(),
                 AvailableOptions.Are(Option.AttackWithWater, Option.ConsumeWater, Option.NoOperation)
             };
-        }        
+        }
     }
 }
