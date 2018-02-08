@@ -12,6 +12,9 @@ namespace Assets.Dragons
         public TailSegment[] tail;
         public Board board;
 
+        public Bar fireBar;
+        public Bar waterBar;
+
         private Health _tailHealth;
         private Fire _consumedFire;
         
@@ -21,8 +24,10 @@ namespace Assets.Dragons
             _consumedFire = Fire.Depleted;
         }
         
-        public void FixedUpdate()
+        public void Update()
         {
+            fireBar.fillRate = _consumedFire.Amount;
+            waterBar.fillRate = _tailHealth.LifePoints;
         }
         
         public void TakeDamage(Damage damage)
