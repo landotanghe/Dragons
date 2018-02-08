@@ -1,10 +1,11 @@
 ﻿using Assets.ActionPicker.ElementsWheel.Actions;
+using Assets.Dragons;
 
 namespace Assets
 {
     public class WaterElement : WheelElementAction
     {        
-        protected override AvailableOptions[] GetAvailableOptions()
+        protected override AvailableOptions[] GetAvailableOptions(Direction direction)
         {
             return new[]
             {

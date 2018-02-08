@@ -37,14 +37,36 @@ namespace Assets.ActionPicker.ElementsWheel
             return dropLocation.action;
         }
 
-        public void DropDiscs(Element element)
+
+
+        public void RequestToDropOffDiscs(Element element)
         {
             DebugWheel();
 
+            var action = DetermineAction(element);
+            if (game.IsAllowedAction(action))
+            {
+                DropOffDiscs(element);
+                game.SelectAction(action);
+            };
+        }
+
+        private WheelElementAction DetermineAction(Element element)
+        {
+            var dropLocation = element;
+            var discCounts = element.discs.Count;
+            for (int i = 0; i < discCounts; i++)
+            {
+                dropLocation = _counterClockWiseElements[dropLocation];
+            }
+            return dropLocation.action;
+        }
+
+        private void DropOffDiscs(Element element)
+        {
             var discs = element.discs.RemoveAll();
             var dropLocation = element;
-
-            Debug.Log("moving discs");
+            
             for (int i = 0; i < discs.Length; i++)
             {
                 dropLocation = _counterClockWiseElements[dropLocation];
@@ -52,9 +74,8 @@ namespace Assets.ActionPicker.ElementsWheel
                 var disc = discs[i];
                 dropLocation.AddDisc(disc);
             }
-            game.SelectAction(dropLocation.action);
         }
-        
+
 
 
         // Update is called once per frame

@@ -1,13 +1,15 @@
-﻿namespace Assets.ActionPicker.ElementsWheel.Actions.Scripts
+﻿using Assets.Dragons;
+
+namespace Assets.ActionPicker.ElementsWheel.Actions.Scripts
 {
     public class FireElement : WheelElementAction
     {
-        protected override AvailableOptions[] GetAvailableOptions()
+        protected override AvailableOptions[] GetAvailableOptions(Direction direction)
         {
             return new[]
             {
                 AvailableOptions.AnyMove(),
-                AvailableOptions.Are(Option.AttackWithWater, Option.ConsumeWater, Option.NoOperation)
+                AvailableOptions.Are(Option.AttackWithFire, Option.ConsumeFire, Option.NoOperation)
             };
         }
     }

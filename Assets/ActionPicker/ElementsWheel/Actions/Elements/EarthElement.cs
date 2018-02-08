@@ -1,13 +1,18 @@
-﻿namespace Assets.ActionPicker.ElementsWheel.Actions.Scripts
+﻿using Assets.Dragons;
+
+namespace Assets.ActionPicker.ElementsWheel.Actions.Scripts
 {
     public class EarthElement : WheelElementAction
     {
-        protected override AvailableOptions[] GetAvailableOptions()
+        protected override AvailableOptions[] GetAvailableOptions(Direction direction)
         {
+            if (direction.IsVertical)
+                return new AvailableOptions[0] {};
+
             return new[]
             {
-                AvailableOptions.AnyMove(),
-                AvailableOptions.Are(Option.AttackWithWater, Option.ConsumeWater, Option.NoOperation)
+                AvailableOptions.Are(Option.Forward),
+                AvailableOptions.Are(Option.Forward, Option.NoOperation)
             };
         }
     }

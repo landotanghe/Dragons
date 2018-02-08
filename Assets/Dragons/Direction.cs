@@ -22,6 +22,22 @@ namespace Assets.Dragons
             return direction!= null && direction.Invert() == this;
         }
 
+        public bool IsVertical
+        {
+            get{
+                return this == North 
+                    || this == South;
+            }
+        }
+
+        public bool IsHorizontal
+        {
+            get
+            {
+                return !IsVertical;
+            }
+        }
+
         public Direction Invert()
         {
             if (this == North)

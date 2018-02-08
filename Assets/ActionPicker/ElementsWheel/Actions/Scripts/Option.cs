@@ -35,5 +35,7 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
 
         public static Option AttackWithFire = new Option("AttackWithFire", (d) => d.ExpelFire());
         public static Option AttackWithWater = new Option("AttackWithWater", (d) => d.ExpelWater());
+
+        public static Option AdditionalSpiritPhase = new Option("AdditionalSpiritPhase", (d) => d.ChooseAdditionalSpirit());
     }
 }

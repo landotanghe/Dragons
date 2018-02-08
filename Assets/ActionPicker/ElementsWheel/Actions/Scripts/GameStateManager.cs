@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Assets;
 using Assets.ActionPicker.ElementsWheel;
 using Assets.ActionPicker.ElementsWheel.Actions;
@@ -87,37 +88,62 @@ public class GameStateManager : MonoBehaviour
             {
                 option = Option.ConsumeFire;
             }
+
             if (option != null && option.CanExecute(_currentPlayer))
             {
-                option.Execute(_currentPlayer);
-                SwitchPlayer();
+                if(_actionExecutor.CanPlay(option)){
+                    _actionExecutor.Play(option);
+                }
+                ChoosePlayerForNextTurn();
+            }
+            else
+            {
+                LogCurrentPlayer();
+                Debug.Log("available options are: " + string.Join("\r\n", _actionExecutor.OptionsThatAreAllowed().Select(o => o.Name).ToArray()));
             }
         }
     }
 
+    public bool IsAllowedAction(WheelElementAction action)
+    {
+        if (_actionExecutor != null)
+            return false;
+
+        return action.GetAvailableOptions(_currentPlayer, board).Any();
+    }
+
     internal void SelectAction(WheelElementAction action)
     {
+        if (!IsAllowedAction(action))
+            throw new InvalidOperationException("Can't select this action now");
+
         _actionExecutor = new ActionExecutor(action, _currentPlayer, board);
     }
 
     private void ChoosePlayerForNextTurn()
     {
-        if (!isSecondMove && _actionExecutor.HasAdditionalMove())
-        {
-            isSecondMove = true;
-        }
-        else
+        if (_actionExecutor.HasToPickAnotherOption())
+            return;
+
+        if (!_currentPlayer.CanPickAnotherSpirit())
         {
             SwitchPlayer();
-            isSecondMove = false;
         }
     }
 
     private void SwitchPlayer()
     {
+        _currentPlayer.ResetSpirits();
         _currentPlayer = _currentPlayer == whiteDragon ? blackDragon : whiteDragon;
+        LogCurrentPlayer();
+        _actionExecutor = null;
     }
-    
+
+    private void LogCurrentPlayer()
+    {
+        Debug.Log("current player is : " + (_currentPlayer == whiteDragon ? "white" : "black"));
+    }
+
     private bool CanMoveDiscsFrom(int selectedDiscPosition)
     {
         if (!elementsWheel.HasDiscsAt(selectedDiscPosition))

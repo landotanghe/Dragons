@@ -15,11 +15,11 @@ namespace Assets
             return firstMove.For(dragon).Any();
         }
 
-        protected abstract AvailableOptions[] GetAvailableOptions();
+        protected abstract AvailableOptions[] GetAvailableOptions(Direction direction);
 
         public AvailableOptions[] GetAvailableOptions(Dragon dragon, Board board)
         {
-            var availableOptions = GetAvailableOptions();
+            var availableOptions = GetAvailableOptions(dragon.head.Direction);
 
             return availableOptions;
         }

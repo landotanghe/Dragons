@@ -2,7 +2,6 @@
 using Assets.ActionPicker.ElementsWheel;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Element : MonoBehaviour {
     public WheelElementAction action;
@@ -11,7 +10,7 @@ public class Element : MonoBehaviour {
     
     public void OnMouseDown()
     {
-        wheel.DropDiscs(this);
+        wheel.RequestToDropOffDiscs(this);
     }
 
     public void AddDisc(Disc disc)
@@ -29,15 +28,5 @@ public class Element : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        var countDisplay = transform.Find("DiscCountDisplay");
-
-        if (countDisplay == null)
-            return;
-
-        var countDisplayText = countDisplay.GetComponent<Text>();
-
-        if (countDisplayText == null)
-            return; 
-        countDisplayText.text = "" + discs.Count;
 	}
 }

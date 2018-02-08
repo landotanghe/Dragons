@@ -1,14 +1,25 @@
-﻿namespace Assets.ActionPicker.ElementsWheel.Actions.Scripts
+﻿using Assets.Dragons;
+
+namespace Assets.ActionPicker.ElementsWheel.Actions.Scripts
 {
     public class LakeElement : WheelElementAction
     {
-        protected override AvailableOptions[] GetAvailableOptions()
+        protected override AvailableOptions[] GetAvailableOptions(Direction direction)
         {
-            return new[]
+            if (direction.IsVertical)
             {
-                AvailableOptions.AnyMove(),
-                AvailableOptions.Are(Option.AttackWithWater, Option.ConsumeWater, Option.NoOperation)
-            };
+                return new[]
+                {
+                    AvailableOptions.AnyMove()
+                };
+            }
+            else
+            {
+                return new[]
+                {
+                    AvailableOptions.Are(Option.NoOperation)
+                };
+            }
         }
     }
 }

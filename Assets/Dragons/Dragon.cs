@@ -65,6 +65,31 @@ namespace Assets.Dragons
             _tailHealth = _tailHealth + water;
         }
 
+        private SpiritsConsumed _canRepeatSpirit;
+        internal void ResetSpirits()
+        {
+            _canRepeatSpirit = SpiritsConsumed.None;
+        }
+
+        public bool CanPickAnotherSpirit()
+        {
+            return _canRepeatSpirit == SpiritsConsumed.OneAdditionalAllowed;
+        }
+
+        internal DragonAction ChooseAdditionalSpirit()
+        {
+            if(_canRepeatSpirit == SpiritsConsumed.None)
+            {
+                _canRepeatSpirit = SpiritsConsumed.OneAdditionalAllowed;
+            }
+            else
+            {
+                _canRepeatSpirit = SpiritsConsumed.AdditionalUsedUp;
+            }
+
+            return new DoNothing(this);
+        }
+
         private void LoseSegment()
         {
             tail = tail.Take(tail.Length - 1).ToArray();
