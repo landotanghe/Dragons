@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 73963591}
   - component: {fileID: 73963590}
   - component: {fileID: 73963592}
+  - component: {fileID: 73963593}
   m_Layer: 0
   m_Name: Wind
   m_TagString: Untagged
@@ -238,6 +239,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4bca2f221983594e8fd23f9af25190d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &73963593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 73963589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb2623558c4e291459de018414d40f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &79432205
@@ -2266,6 +2278,7 @@ GameObject:
   - component: {fileID: 773524320}
   - component: {fileID: 773524321}
   - component: {fileID: 773524322}
+  - component: {fileID: 773524323}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -2339,6 +2352,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1617ae2d65d8c474d9652ed42c297a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &773524323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 773524319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6e89fd0b1b035842a0350ce5a43111a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &775675666
@@ -3118,7 +3142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 0}
+  action: {fileID: 1734109120}
   wheel: {fileID: 1086189857}
   discs: {fileID: 631148315}
 --- !u!135 &994517700
@@ -4112,7 +4136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 0}
+  action: {fileID: 73963593}
   wheel: {fileID: 1086189857}
   discs: {fileID: 165123715}
 --- !u!135 &1343596257
@@ -4724,6 +4748,7 @@ GameObject:
   - component: {fileID: 1734109118}
   - component: {fileID: 1734109117}
   - component: {fileID: 1734109119}
+  - component: {fileID: 1734109120}
   m_Layer: 0
   m_Name: Sky
   m_TagString: Untagged
@@ -4799,6 +4824,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf445f86ed4b33841897dcde91835955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1734109120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1734109116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea223e91fc8651448d216bc510b6e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1751349497
 GameObject:
   m_ObjectHideFlags: 0
@@ -4808,7 +4844,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1751349498}
   - component: {fileID: 1751349499}
-  - component: {fileID: 1751349501}
   - component: {fileID: 1751349500}
   m_Layer: 0
   m_Name: ThunderElement
@@ -4843,7 +4878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 0}
+  action: {fileID: 1927230646}
   wheel: {fileID: 1086189857}
   discs: {fileID: 620834003}
 --- !u!135 &1751349500
@@ -4858,20 +4893,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1751349501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1751349497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action: {fileID: 1927230646}
-  wheel: {fileID: 1086189857}
-  discs: {fileID: 620834003}
 --- !u!1 &1752755823
 GameObject:
   m_ObjectHideFlags: 0
@@ -5001,7 +5022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 0}
+  action: {fileID: 773524323}
   wheel: {fileID: 1086189857}
   discs: {fileID: 630060859}
 --- !u!58 &1762740449

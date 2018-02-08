@@ -11,7 +11,7 @@ public class Element : MonoBehaviour {
     
     public void OnMouseDown()
     {
-        wheel.DropOff(this);
+        wheel.DropDiscs(this);
     }
 
     public void AddDisc(Disc disc)

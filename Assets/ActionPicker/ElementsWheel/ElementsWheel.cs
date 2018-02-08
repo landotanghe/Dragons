@@ -37,7 +37,7 @@ namespace Assets.ActionPicker.ElementsWheel
             return dropLocation.action;
         }
 
-        public WheelElementAction DropOff(Element element)
+        public void DropDiscs(Element element)
         {
             DebugWheel();
 
@@ -45,16 +45,16 @@ namespace Assets.ActionPicker.ElementsWheel
             var dropLocation = element;
 
             Debug.Log("moving discs");
-            for(int i= 0; i< discs.Length; i++)
+            for (int i = 0; i < discs.Length; i++)
             {
                 dropLocation = _counterClockWiseElements[dropLocation];
 
                 var disc = discs[i];
                 dropLocation.AddDisc(disc);
             }
-            return dropLocation.action;
+            game.SelectAction(dropLocation.action);
         }
-
+        
 
 
         // Update is called once per frame

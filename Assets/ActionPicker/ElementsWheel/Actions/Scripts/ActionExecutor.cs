@@ -16,8 +16,8 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
 
         public ActionExecutor(WheelElementAction action, Dragon dragon, Board board)
         {
-            _availableOptions = _action.GetAvailableOptions(dragon, board);
             _action = action;
+            _availableOptions = _action.GetAvailableOptions(dragon, board);
         }
         
         public void PickOption(string optionName)

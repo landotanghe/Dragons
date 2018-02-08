@@ -1,4 +1,5 @@
-﻿using Assets;
+﻿using System;
+using Assets;
 using Assets.ActionPicker.ElementsWheel;
 using Assets.ActionPicker.ElementsWheel.Actions;
 using Assets.Dragons;
@@ -10,7 +11,6 @@ public class GameStateManager : MonoBehaviour
     public Dragon whiteDragon;
     public Dragon blackDragon;
     public Board board;
-    private KeyCode FirstElementKeyCode = KeyCode.Keypad1;
 
     private ActionExecutor _actionExecutor;
 
@@ -52,65 +52,52 @@ public class GameStateManager : MonoBehaviour
 
     private void CheckInput(KeyCode keyPressed)
     {
-        Option option = null;
-        if(keyPressed == KeyCode.LeftArrow)
+        if(_actionExecutor != null)
         {
-            option = Option.Left;
-        }else if(keyPressed == KeyCode.RightArrow)
-        {
-            option = Option.Right;
-        }
-        else if (keyPressed == KeyCode.UpArrow)
-        {
-            option = Option.Forward;
-        }
-        else if (keyPressed == KeyCode.Space)
-        {
-            option = Option.NoOperation;
-        }
-        else if(keyPressed == KeyCode.F)
-        {
-            option = Option.AttackWithFire;
-        }
-        else if(keyPressed == KeyCode.S)
-        {
-            option = Option.AttackWithWater;
-        }
-        else if(keyPressed == KeyCode.D)
-        {
-            option = Option.ConsumeWater;
-        }else if (keyPressed == KeyCode.E)
-        {
-            option = Option.ConsumeFire;
-        }
-
-        if(option != null && option.CanExecute(_currentPlayer))
-        {
-            option.Execute(_currentPlayer);
-            SwitchPlayer();
-        }
-
-        var selectedElementIndex = keyPressed - FirstElementKeyCode;
-
-        if (_actionExecutor == null)
-        {
-            //Debug.Log("Selecting action " + selectedElementIndex);
-            if (elementsWheel.IsValidIndex(selectedElementIndex))
+            Option option = null;
+            if (keyPressed == KeyCode.LeftArrow)
             {
-                TryMovingDisc(selectedElementIndex);
+                option = Option.Left;
+            }
+            else if (keyPressed == KeyCode.RightArrow)
+            {
+                option = Option.Right;
+            }
+            else if (keyPressed == KeyCode.UpArrow)
+            {
+                option = Option.Forward;
+            }
+            else if (keyPressed == KeyCode.Space)
+            {
+                option = Option.NoOperation;
+            }
+            else if (keyPressed == KeyCode.F)
+            {
+                option = Option.AttackWithFire;
+            }
+            else if (keyPressed == KeyCode.S)
+            {
+                option = Option.AttackWithWater;
+            }
+            else if (keyPressed == KeyCode.D)
+            {
+                option = Option.ConsumeWater;
+            }
+            else if (keyPressed == KeyCode.E)
+            {
+                option = Option.ConsumeFire;
+            }
+            if (option != null && option.CanExecute(_currentPlayer))
+            {
+                option.Execute(_currentPlayer);
+                SwitchPlayer();
             }
         }
-        else
-        {
-            //Debug.Log("Selecting options for action " + selectedElementIndex);
-            if(_actionExecutor.CanExecute())
-            {
-                _actionExecutor.ExecuteNextOption();
-                ChoosePlayerForNextTurn();
+    }
 
-                _actionExecutor = null;
-            }
-        }
+    internal void SelectAction(WheelElementAction action)
+    {
+        _actionExecutor = new ActionExecutor(action, _currentPlayer, board);
     }
 
     private void ChoosePlayerForNextTurn()
@@ -130,22 +117,7 @@ public class GameStateManager : MonoBehaviour
     {
         _currentPlayer = _currentPlayer == whiteDragon ? blackDragon : whiteDragon;
     }
-
-    private void TryMovingDisc(int selectedDiscPosition)
-    {
-        if (CanMoveDiscsFrom(selectedDiscPosition))
-        {
-           // Debug.Log("moving disc from " + selectedDiscPosition);
-            var action = elementsWheel.DropOff(elementsWheel.elements[selectedDiscPosition]);
-
-            _actionExecutor = new ActionExecutor(action, whiteDragon, board);
-        }
-        else
-        {
-           // Debug.Log("can't move disc from " + selectedDiscPosition);
-        }
-    }
-
+    
     private bool CanMoveDiscsFrom(int selectedDiscPosition)
     {
         if (!elementsWheel.HasDiscsAt(selectedDiscPosition))
