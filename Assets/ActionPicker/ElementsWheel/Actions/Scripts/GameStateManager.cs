@@ -14,15 +14,13 @@ public class GameStateManager : MonoBehaviour
     public Board board;
 
     private ActionExecutor _actionExecutor;
-
-    private bool isSecondMove;
+    
     private Dragon _currentPlayer;
 
 
 	// Use this for initialization
 	void Start () {
         _currentPlayer = whiteDragon;
-        isSecondMove = false;
         _actionExecutor = null;
 
         whiteDragon.head.Reposition(new Location(1, 6), Direction.North);
@@ -86,6 +84,9 @@ public class GameStateManager : MonoBehaviour
             else if (keyPressed == KeyCode.E)
             {
                 option = Option.ConsumeFire;
+            }else if(keyPressed == KeyCode.R)
+            {
+                option = Option.AdditionalSpiritPhase;
             }
 
             if (option != null && option.CanExecute(_currentPlayer))
@@ -126,6 +127,7 @@ public class GameStateManager : MonoBehaviour
 
         if (!_currentPlayer.CanPickAnotherSpirit())
         {
+            _actionExecutor.ApplyBite();
             SwitchPlayer();
         }
     }

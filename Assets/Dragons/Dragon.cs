@@ -70,10 +70,22 @@ namespace Assets.Dragons
             _tailHealth = _tailHealth + water;
         }
 
+        public void SetAttacked()
+        {
+            attacked = false;
+        }
+
+        public bool HasAttacked()
+        {
+            return attacked;
+        }
+
         private SpiritsConsumed _canRepeatSpirit;
+        private bool attacked = false;
         internal void ResetSpirits()
         {
             _canRepeatSpirit = SpiritsConsumed.None;
+            attacked = false;
         }
 
         public bool CanPickAnotherSpirit()

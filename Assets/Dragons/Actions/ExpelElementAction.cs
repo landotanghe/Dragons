@@ -49,6 +49,8 @@ namespace Assets.Dragons
 
         public override void Execute()
         {
+            Dragon.SetAttacked();
+
             var target = Board.GetOpponentOf(Dragon);
 
             var distanceDamage = DistanceDamage();

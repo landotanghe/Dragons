@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
 using Assets.Dragons;
+using Assets.Dragons.Damages;
 
 namespace Assets.ActionPicker.ElementsWheel.Actions
 {
     public class ActionExecutor
     {
         private Dragon _dragon;
-        private Board board;
+        private Board _board;
 
         private WheelElementAction _action;
         private int _nextOptionToPick;
@@ -20,6 +21,7 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
             _availableOptions = _action.GetAvailableOptions(dragon, board);
             _nextOptionToPick = 0;
             _dragon = dragon;
+            _board = board;
         }
 
         public bool CanPlay(Option option)
@@ -43,7 +45,21 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
         {
             return _nextOptionToPick < _availableOptions.Count();
         }
-        
+
+        internal void ApplyBite()
+        {
+            if (_dragon.HasAttacked())
+                return;
+
+            var target = _board.GetOpponentOf(_dragon);
+            var damageLocation = _dragon.head.Location + _dragon.head.Direction;
+            if (target.Occupies(damageLocation))
+            {
+                _dragon.SetAttacked();
+                target.TakeDamage(Damage.One);
+            }
+        }
+
         //public void PickOption(string optionName)
         //{
         //    nextOption = _availableOptions[0].For(dragon)
