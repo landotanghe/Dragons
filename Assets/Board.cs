@@ -12,6 +12,8 @@ namespace Assets
         public Dragon whiteDragon;
         public Dragon blackDragon;
 
+        public ElementsPool elementsPool;
+
         public Board()
         {
             _waterPool = Water.Depleted;
@@ -49,12 +51,14 @@ namespace Assets
                 return Water.Depleted;
 
             _waterPool = _waterPool - Water.One;
+            elementsPool.RemoveWater();
             return Water.One;
         }
 
         public void AddWaterToPool(Water water)
         {
             _waterPool = _waterPool + water;
+            elementsPool.AddWater(water.Amount);
         }
 
         public Fire ConsumeFire()
@@ -63,12 +67,14 @@ namespace Assets
                 return Fire.Depleted;
 
             _firePool = _firePool - Fire.One;
+            elementsPool.RemoveFire();
             return Fire.One;
         }
 
         public void AddFireToPool(Fire exhaledFire)
         {
             _firePool = _firePool + exhaledFire;
+            elementsPool.AddFire(exhaledFire.Amount);
         }
     }
 }

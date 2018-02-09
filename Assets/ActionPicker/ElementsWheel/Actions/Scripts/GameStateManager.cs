@@ -16,6 +16,7 @@ public class GameStateManager : MonoBehaviour
     private ActionExecutor _actionExecutor;
     
     private Dragon _currentPlayer;
+    private bool _cheatMode = false;
 
 
 	// Use this for initialization
@@ -52,55 +53,91 @@ public class GameStateManager : MonoBehaviour
     {
         if(_actionExecutor != null)
         {
-            Option option = null;
-            if (keyPressed == KeyCode.LeftArrow)
+            if(keyPressed == KeyCode.Escape)
             {
-                option = Option.Left;
-            }
-            else if (keyPressed == KeyCode.RightArrow)
-            {
-                option = Option.Right;
-            }
-            else if (keyPressed == KeyCode.UpArrow)
-            {
-                option = Option.Forward;
-            }
-            else if (keyPressed == KeyCode.Space)
-            {
-                option = Option.NoOperation;
-            }
-            else if (keyPressed == KeyCode.F)
-            {
-                option = Option.AttackWithFire;
-            }
-            else if (keyPressed == KeyCode.S)
-            {
-                option = Option.AttackWithWater;
-            }
-            else if (keyPressed == KeyCode.D)
-            {
-                option = Option.ConsumeWater;
-            }
-            else if (keyPressed == KeyCode.E)
-            {
-                option = Option.ConsumeFire;
-            }else if(keyPressed == KeyCode.R)
-            {
-                option = Option.AdditionalSpiritPhase;
+                _cheatMode = !_cheatMode;
             }
 
-            if (option != null && option.CanExecute(_currentPlayer))
+            var option = SelectOption(keyPressed);
+            Play(option);
+        }
+    }
+
+    private static Option SelectOption(KeyCode keyPressed)
+    {
+        Option option = null;
+        if (keyPressed == KeyCode.LeftArrow)
+        {
+            option = Option.Left;
+        }
+        else if (keyPressed == KeyCode.RightArrow)
+        {
+            option = Option.Right;
+        }
+        else if (keyPressed == KeyCode.UpArrow)
+        {
+            option = Option.Forward;
+        }
+        else if (keyPressed == KeyCode.Space)
+        {
+            option = Option.NoOperation;
+        }
+        else if (keyPressed == KeyCode.F)
+        {
+            option = Option.AttackWithFire;
+        }
+        else if (keyPressed == KeyCode.S)
+        {
+            option = Option.AttackWithWater;
+        }
+        else if (keyPressed == KeyCode.D)
+        {
+            option = Option.ConsumeWater;
+        }
+        else if (keyPressed == KeyCode.E)
+        {
+            option = Option.ConsumeFire;
+        }
+        else if (keyPressed == KeyCode.R)
+        {
+            option = Option.AdditionalSpiritPhase;
+        }
+
+        return option;
+    }
+
+    private void Play(Option option)
+    {
+        if (_cheatMode)
+        {
+            Cheat(option);
+        }
+        else
+        {
+            PlayFair(option);
+        }
+    }
+
+    private void Cheat(Option option)
+    {
+        option.Execute(_currentPlayer);
+        SwitchPlayer();
+    }
+
+    private void PlayFair(Option option)
+    {
+        if (option != null && option.CanExecute(_currentPlayer))
+        {
+            if (_actionExecutor.CanPlay(option))
             {
-                if(_actionExecutor.CanPlay(option)){
-                    _actionExecutor.Play(option);
-                }
-                ChoosePlayerForNextTurn();
+                _actionExecutor.Play(option);
             }
-            else
-            {
-                LogCurrentPlayer();
-                Debug.Log("available options are: " + string.Join("\r\n", _actionExecutor.OptionsThatAreAllowed().Select(o => o.Name).ToArray()));
-            }
+            ChoosePlayerForNextTurn();
+        }
+        else
+        {
+            LogCurrentPlayer();
+            Debug.Log("available options are: " + string.Join("\r\n", _actionExecutor.OptionsThatAreAllowed().Select(o => o.Name).ToArray()));
         }
     }
 
