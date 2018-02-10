@@ -24,6 +24,11 @@
                 return new Water(1);
             }
         }
+
+        public static Water operator++ (Water water)
+        {
+            return water + One;
+        }
         
         public static Water operator + (Water w1, Water w2)
         {

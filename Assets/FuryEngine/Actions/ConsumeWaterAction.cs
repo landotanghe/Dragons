@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Assets.FuryEngine.DragonPackage;
+using FuryEngine;
+using System;
 
 namespace Assets.Dragons.Actions
 {
     public class ConsumeWaterAction : DragonAction
     {
-        public ConsumeWaterAction(Dragon dragon) : base(dragon)
+        public ConsumeWaterAction(DragonX dragon, GameEngine game) : base(dragon, game)
         {
         }
 
@@ -15,7 +17,7 @@ namespace Assets.Dragons.Actions
 
         public override void Execute()
         {
-            var water = Board.ConsumeWater();
+            var water = GameEngine.ConsumeWater();
             Dragon.Consume(water);
         }
     }

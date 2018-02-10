@@ -20,9 +20,20 @@ namespace Assets.Dragons.Damages
             LifePoints = lifePoints;
         }
 
-        public Damage DamageToDestroy()
+        public Water WaterNeededToHeal
         {
-            return Damage.FromValue(LifePoints);
+            get
+            {
+                return new Water(Maximum - LifePoints);
+            }
+        }
+
+        public Damage DamageToDestroy
+        {
+            get
+            {
+                return Damage.FromValue(LifePoints);
+            }
         }
 
         public bool CanBear(Damage damage)

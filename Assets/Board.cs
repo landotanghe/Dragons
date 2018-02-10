@@ -20,26 +20,7 @@ namespace Assets
             _firePool = Fire.FullPool;
         }
 
-        internal bool IsFreeSpace(Location location)
-        {
-            return IsWithinBounds(location.X, location.Y) && 
-                !whiteDragon.Occupies(location) && 
-                !blackDragon.Occupies(location);
-        }
-
-        private bool IsWithinBounds(int x, int y)
-        {
-            return x >= 0 && x < 8
-                && y >= 0 && y < 8;
-        }
-
-        public Dragon GetOpponentOf(Dragon dragon)
-        {
-            return dragon == whiteDragon 
-                ? blackDragon 
-                : whiteDragon;
-        }
-
+        
         public Water GetWaterInPool()
         {
             return _waterPool;

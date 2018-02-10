@@ -1,5 +1,7 @@
 ﻿using Assets.ActionPicker.ElementsWheel.Actions;
 using Assets.Dragons;
+using Assets.FuryEngine.DragonPackage;
+using FuryEngine;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -8,7 +10,7 @@ namespace Assets
 {
     public abstract class WheelElementAction : MonoBehaviour
     {
-        public bool CanExecute(Dragon dragon, Board board)
+        public bool CanExecute(DragonX dragon, GameEngine board)
         {
             var firstMove = GetAvailableOptions(dragon, board)[0];
 
@@ -17,9 +19,9 @@ namespace Assets
 
         protected abstract AvailableOptions[] GetAvailableOptions(Direction direction);
 
-        public AvailableOptions[] GetAvailableOptions(Dragon dragon, Board board)
+        public AvailableOptions[] GetAvailableOptions(DragonX dragon, GameEngine game)
         {
-            var availableOptions = GetAvailableOptions(dragon.head.Direction);
+            var availableOptions = GetAvailableOptions(dragon.Direction);
 
             return availableOptions;
         }

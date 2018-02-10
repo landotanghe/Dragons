@@ -1,6 +1,5 @@
 ﻿using Assets.Dragons.Actions;
-using Assets.Dragons.Damages;
-using System;
+using Assets.FuryEngine.DragonPackage;
 using System.Linq;
 using UnityEngine;
 
@@ -8,6 +7,7 @@ namespace Assets.Dragons
 {
     public class Dragon : MonoBehaviour
     {
+        public int playerIndex;
         public Head head;
         public TailSegment[] tail;
         public Board board;
@@ -15,160 +15,38 @@ namespace Assets.Dragons
         public Bar fireBar;
         public Bar waterBar;
 
-        private Health _tailHealth;
-        private Fire _consumedFire;
-        
-        public Dragon()
+
+        public void Start()
         {
-            _tailHealth = Health.Full;
-            _consumedFire = Fire.Depleted;
+            DragonX.OnDragonTookDamageHandler += OnDragonDamaged;
+            DragonX.MovedEventHandler += OnDragonMoved;
         }
-        
+
         public void Update()
         {
-            fireBar.fillRate = _consumedFire.Amount;
-            waterBar.fillRate = _tailHealth.LifePoints;
         }
         
-        public void TakeDamage(Damage damage)
-        {
-            while (!_tailHealth.CanBear(damage) && IsAlive())
-            {
-                LoseSegment();
-                damage = damage - Damage.FullSegment;
-            }
 
-            if (IsAlive())
+        public void OnDragonDamaged(DragonX.DragonTookDamageEvent @event)
+        {
+            waterBar.fillRate = @event.Health;
+            if(tail.Length > @event.TailLength)
             {
-                _tailHealth = _tailHealth - damage;
-                board.AddWaterToPool(new Water(damage.Value));
+                tail = tail.Take(@event.TailLength).ToArray();
             }
         }
-
-        public DragonAction DoNothing()
-        {
-            return new DoNothing(this);
-        }
-
-        public bool CanConsumeFire()
-        {
-            return _consumedFire.Amount < 4;
-        }
-
-        public void Consume(Fire fire)
-        {
-            _consumedFire = _consumedFire + fire;
-        }
-
-        public bool CanConsumeWater()
-        {
-            return _tailHealth.LifePoints < 4;
-        }
-
-        public void Consume(Water water)
-        {
-            _tailHealth = _tailHealth + water;
-        }
-
-        public void SetAttacked()
-        {
-            attacked = false;
-        }
-
-        public bool HasAttacked()
-        {
-            return attacked;
-        }
-
-        private SpiritsConsumed _canRepeatSpirit;
-        private bool attacked = false;
-        internal void ResetSpirits()
-        {
-            _canRepeatSpirit = SpiritsConsumed.None;
-            attacked = false;
-        }
-
-        public bool CanPickAnotherSpirit()
-        {
-            return _canRepeatSpirit == SpiritsConsumed.OneAdditionalAllowed;
-        }
-
-        internal DragonAction ChooseAdditionalSpirit()
-        {
-            if(_canRepeatSpirit == SpiritsConsumed.None)
-            {
-                _canRepeatSpirit = SpiritsConsumed.OneAdditionalAllowed;
-            }
-            else
-            {
-                _canRepeatSpirit = SpiritsConsumed.AdditionalUsedUp;
-            }
-
-            return new DoNothing(this);
-        }
-
+                
         private void LoseSegment()
         {
             tail = tail.Take(tail.Length - 1).ToArray();
         }
-        
-        public bool IsAlive()
-        {
-            return tail.Any();
-        }
-        
-        public Move TurnLeft()
-        {
-            var newDirection = head.Direction.TurnLeft();
-            return new Move(this, newDirection);
-        }
 
-        public bool Occupies(Location location)
+        public void OnDragonMoved(DragonX.DragonMovedEvent @event)
         {
-            return head.Occupies(location) || 
-                tail.Any(part => part.Occupies(location));
+            MoveTo(@event.Location, @event.Direction);
         }
-
-        public Move TurnRight()
-        {
-            var newDirection = head.Direction.TurnRight();
-            return new Move(this, newDirection);
-        }
-
-        public Move MoveForwards()
-        {
-            return new Move(this, head.Direction);
-        }
-
-        public ExpelFireAction ExpelFire()
-        {
-            return new ExpelFireAction(this);
-        }          
-        
-        public ExpelWaterAction ExpelWater()
-        {
-            return new ExpelWaterAction(this);
-        }
-
-        public ConsumeWaterAction ConsumeWater()
-        {
-            return new ConsumeWaterAction(this);
-        }
-
-        public ConsumeFireAction ConsumeFire()
-        {
-            return new ConsumeFireAction(this);
-        }
-
-        public Fire ExhaleFire()
-        {
-            var fire = _consumedFire;
-            _consumedFire = Fire.Depleted;
-
-            return fire;
-        }                
-        
-        public void MoveTo(Location target, Direction direction)
+                
+        private void MoveTo(Location target, Direction direction)
         {
             MoveLastTailPartToHeadPosition(direction);
             head.Reposition(target, direction);
@@ -176,7 +54,7 @@ namespace Assets.Dragons
             head.SetDownStream(direction.Invert());
         }
 
-        public void MoveLastTailPartToHeadPosition(Direction direction)
+        private void MoveLastTailPartToHeadPosition(Direction direction)
         {
             if (tail.Length == 0)
                 return;

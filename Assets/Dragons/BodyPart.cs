@@ -8,7 +8,6 @@ namespace Assets.Dragons
         public Direction Direction { get; private set; }
         public Direction DownStream { get; private set; }
         
-
         private const float LeftMost = -6f;
         private const float RightMost = 5.2f;
         private const float Width = RightMost - LeftMost;
@@ -21,8 +20,7 @@ namespace Assets.Dragons
             Location = new Location(0, 0);
             Direction = Direction.North;
             Direction = Direction.South;
-        }
-        
+        }        
 
         public void Reposition(Location location, Direction upStream)
         {

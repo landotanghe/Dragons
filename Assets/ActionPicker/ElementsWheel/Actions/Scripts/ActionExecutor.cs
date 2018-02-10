@@ -2,26 +2,28 @@
 using System.Linq;
 using Assets.Dragons;
 using Assets.Dragons.Damages;
+using Assets.FuryEngine.DragonPackage;
+using FuryEngine;
 
 namespace Assets.ActionPicker.ElementsWheel.Actions
 {
     public class ActionExecutor
     {
-        private Dragon _dragon;
-        private Board _board;
+        private DragonX _dragon;
+        private GameEngine _game;
 
         private WheelElementAction _action;
         private int _nextOptionToPick;
 
         private AvailableOptions[] _availableOptions;
 
-        public ActionExecutor(WheelElementAction action, Dragon dragon, Board board)
+        public ActionExecutor(WheelElementAction action, DragonX dragon, GameEngine game)
         {
             _action = action;
-            _availableOptions = _action.GetAvailableOptions(dragon, board);
+            _availableOptions = _action.GetAvailableOptions(dragon, game);
             _nextOptionToPick = 0;
             _dragon = dragon;
-            _board = board;
+            _game = game;
         }
 
         public bool CanPlay(Option option)
@@ -51,8 +53,8 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
             if (_dragon.HasAttacked())
                 return;
 
-            var target = _board.GetOpponentOf(_dragon);
-            var damageLocation = _dragon.head.Location + _dragon.head.Direction;
+            var target = _game.GetOpponentOf(_dragon);
+            var damageLocation = _dragon.Location + _dragon.Direction;
             if (target.Occupies(damageLocation))
             {
                 _dragon.SetAttacked();

@@ -46,6 +46,11 @@ namespace Assets.Dragons.Damages
             }
         }
 
+        public static Damage operator --(Damage damage)
+        {
+            return damage - One;
+        }
+
         public static Damage operator -(Damage first, Damage substractor)
         {
             return FromValue(first.Value - substractor.Value);

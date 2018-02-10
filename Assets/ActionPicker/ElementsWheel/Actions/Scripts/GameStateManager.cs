@@ -4,6 +4,7 @@ using Assets;
 using Assets.ActionPicker.ElementsWheel;
 using Assets.ActionPicker.ElementsWheel.Actions;
 using Assets.Dragons;
+using FuryEngine;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
@@ -12,28 +13,16 @@ public class GameStateManager : MonoBehaviour
     public Dragon whiteDragon;
     public Dragon blackDragon;
     public Board board;
-
-    private ActionExecutor _actionExecutor;
     
-    private Dragon _currentPlayer;
-    private bool _cheatMode = false;
-
+    public GameEngine GameEngine;
+    public GameStateManager()
+    {
+        GameEngine = GameEngine.Instantiate();
+    }
 
 	// Use this for initialization
 	void Start () {
-        _currentPlayer = whiteDragon;
-        _actionExecutor = null;
-
-        whiteDragon.head.Reposition(new Location(1, 6), Direction.North);
-        whiteDragon.MoveForwards().Execute();
-        whiteDragon.TurnLeft().Execute();
-        whiteDragon.TurnLeft().Execute();
-
-        blackDragon.head.Reposition(new Location(5, 1), Direction.East);
-        blackDragon.MoveForwards().Execute();
-        blackDragon.MoveForwards().Execute();
-        blackDragon.TurnRight().Execute();
-        blackDragon.TurnRight().Execute();
+        GameEngine.elementsWheel = elementsWheel;//TODO refactor
     }
 	
 	// Update is called once per frame
@@ -51,15 +40,10 @@ public class GameStateManager : MonoBehaviour
 
     private void CheckInput(KeyCode keyPressed)
     {
-        if(_actionExecutor != null)
+        if(GameEngine._actionExecutor != null)//TODO refactor
         {
-            if(keyPressed == KeyCode.Escape)
-            {
-                _cheatMode = !_cheatMode;
-            }
-
             var option = SelectOption(keyPressed);
-            Play(option);
+            GameEngine.Play(option);
         }
     }
 
@@ -106,90 +90,13 @@ public class GameStateManager : MonoBehaviour
         return option;
     }
 
-    private void Play(Option option)
-    {
-        if (_cheatMode)
-        {
-            Cheat(option);
-        }
-        else
-        {
-            PlayFair(option);
-        }
-    }
-
-    private void Cheat(Option option)
-    {
-        option.Execute(_currentPlayer);
-        SwitchPlayer();
-    }
-
-    private void PlayFair(Option option)
-    {
-        if (option != null && option.CanExecute(_currentPlayer))
-        {
-            if (_actionExecutor.CanPlay(option))
-            {
-                _actionExecutor.Play(option);
-            }
-            ChoosePlayerForNextTurn();
-        }
-        else
-        {
-            LogCurrentPlayer();
-            Debug.Log("available options are: " + string.Join("\r\n", _actionExecutor.OptionsThatAreAllowed().Select(o => o.Name).ToArray()));
-        }
-    }
-
-    public bool IsAllowedAction(WheelElementAction action)
-    {
-        if (_actionExecutor != null)
-            return false;
-
-        return action.GetAvailableOptions(_currentPlayer, board).Any();
-    }
-
     internal void SelectAction(WheelElementAction action)
     {
-        if (!IsAllowedAction(action))
-            throw new InvalidOperationException("Can't select this action now");
-
-        _actionExecutor = new ActionExecutor(action, _currentPlayer, board);
+        GameEngine.SelectAction(action);
     }
 
-    private void ChoosePlayerForNextTurn()
+    internal bool IsAllowedAction(WheelElementAction action)
     {
-        if (_actionExecutor.HasToPickAnotherOption())
-            return;
-
-        if (!_currentPlayer.CanPickAnotherSpirit())
-        {
-            _actionExecutor.ApplyBite();
-            SwitchPlayer();
-        }
-    }
-
-    private void SwitchPlayer()
-    {
-        _currentPlayer.ResetSpirits();
-        _currentPlayer = _currentPlayer == whiteDragon ? blackDragon : whiteDragon;
-        LogCurrentPlayer();
-        _actionExecutor = null;
-    }
-
-    private void LogCurrentPlayer()
-    {
-        Debug.Log("current player is : " + (_currentPlayer == whiteDragon ? "white" : "black"));
-    }
-
-    private bool CanMoveDiscsFrom(int selectedDiscPosition)
-    {
-        if (!elementsWheel.HasDiscsAt(selectedDiscPosition))
-        {
-            return false;
-        }
-
-        var predictedAction = elementsWheel.GetActionFor(selectedDiscPosition);        
-        return predictedAction.CanExecute(whiteDragon, board);
+        return GameEngine.IsAllowedAction(action);
     }
 }

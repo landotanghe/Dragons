@@ -1,4 +1,5 @@
 ﻿using Assets.Dragons;
+using Assets.FuryEngine.DragonPackage;
 using System;
 
 namespace Assets.ActionPicker.ElementsWheel.Actions
@@ -6,19 +7,19 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
     public class Option
     {
         public string Name { get; private set; }
-        private Func<Dragon, DragonAction> _actionFinder { get; set; }
+        private Func<DragonX, DragonAction> _actionFinder { get; set; }
 
-        public bool CanExecute(Dragon dragon)
+        public bool CanExecute(DragonX dragon)
         {
             return _actionFinder(dragon).CanExecute();
         }
 
-        public void Execute(Dragon dragon)
+        public void Execute(DragonX dragon)
         {
             _actionFinder(dragon).Execute();
         }
 
-        public Option(string name, Func<Dragon, DragonAction> actionFinder)
+        public Option(string name, Func<DragonX, DragonAction> actionFinder)
         {
             Name = name;
             _actionFinder = actionFinder;

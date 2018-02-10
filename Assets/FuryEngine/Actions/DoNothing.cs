@@ -1,8 +1,11 @@
-﻿namespace Assets.Dragons.Actions
+﻿using Assets.FuryEngine.DragonPackage;
+using FuryEngine;
+
+namespace Assets.Dragons.Actions
 {
     public class DoNothing : DragonAction
     {
-        public DoNothing(Dragon dragon) : base(dragon)
+        public DoNothing(DragonX dragon, GameEngine game) : base(dragon, game)
         {
         }
 

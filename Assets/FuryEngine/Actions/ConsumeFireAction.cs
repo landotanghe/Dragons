@@ -1,8 +1,11 @@
-﻿namespace Assets.Dragons.Actions
+﻿using Assets.FuryEngine.DragonPackage;
+using FuryEngine;
+
+namespace Assets.Dragons.Actions
 {
     public class ConsumeFireAction : DragonAction
     {
-        public ConsumeFireAction(Dragon dragon) : base(dragon)
+        public ConsumeFireAction(DragonX dragon, GameEngine game) : base(dragon, game)
         {
         }
 
@@ -13,7 +16,7 @@
 
         public override void Execute()
         {
-            var fire = Board.ConsumeFire();
+            var fire = GameEngine.ConsumeFire();
             Dragon.Consume(fire);
         }
     }
