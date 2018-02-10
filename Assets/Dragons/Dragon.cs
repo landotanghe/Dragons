@@ -1,5 +1,4 @@
-﻿using Assets.Dragons.Actions;
-using Assets.FuryEngine.DragonPackage;
+﻿using Assets.FuryEngine.DragonPackage;
 using System.Linq;
 using UnityEngine;
 
@@ -14,11 +13,11 @@ namespace Assets.Dragons
 
         public Bar fireBar;
         public Bar waterBar;
-
-
+        public PlayerColor color;
+        
         public void Start()
         {
-            DragonX.OnDragonTookDamageHandler += OnDragonDamaged;
+            DragonX.OnDragonTookDamage += OnDragonDamaged;
             DragonX.MovedEventHandler += OnDragonMoved;
         }
 
@@ -29,6 +28,9 @@ namespace Assets.Dragons
 
         public void OnDragonDamaged(DragonX.DragonTookDamageEvent @event)
         {
+            if (@event.Color != color)
+                return;
+
             waterBar.fillRate = @event.Health;
             if(tail.Length > @event.TailLength)
             {
@@ -43,37 +45,28 @@ namespace Assets.Dragons
 
         public void OnDragonMoved(DragonX.DragonMovedEvent @event)
         {
+            if (@event.Color != color)
+                return;
+
             MoveTo(@event.Location, @event.Direction);
         }
                 
         private void MoveTo(Location target, Direction direction)
         {
-            MoveLastTailPartToHeadPosition(direction);
+            Debug.Log("head@ " + head.Location.X + "," + head.Location.Y);
+            MoveTailTo(tail, target, direction);
             head.Reposition(target, direction);
-
-            head.SetDownStream(direction.Invert());
         }
-
-        private void MoveLastTailPartToHeadPosition(Direction direction)
+        
+        private void MoveTailTo(TailSegment[] tail, Location location, Direction direction)
         {
-            if (tail.Length == 0)
-                return;
-
-            MoveLastTailPartToHeadPosition();
-
-            tail[0].Reposition(head.Location, direction);
-            tail[0].SetDownStream(head.DownStream);
-        }
-
-        private void MoveLastTailPartToHeadPosition()
-        {
-            var lastTailPart = tail[tail.Length - 1];
-
-            for (int i = tail.Length - 1; i > 0; i--)
+            foreach (var segment in tail)
             {
-                tail[i] = tail[i - 1];
+                var previousLocation = segment.Location;
+                Debug.Log("segment@ " + previousLocation.X + "," + previousLocation.Y);
+                segment.Reposition(location, direction);
+                location = previousLocation;
             }
-            tail[0] = lastTailPart;
         }
     }
 }

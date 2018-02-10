@@ -41,19 +41,21 @@ namespace Assets.FuryEngine.DragonPackage
         }
 
 
-        public delegate void OnDragonTookDamage(DragonTookDamageEvent @event);
-        public static OnDragonTookDamage OnDragonTookDamageHandler;
+        public delegate void DragonTookDamageHandler(DragonTookDamageEvent @event);
+        public static event DragonTookDamageHandler OnDragonTookDamage;
 
         public class DragonTookDamageEvent
         {
-            public DragonTookDamageEvent(Tail tail, Health health)
+            public DragonTookDamageEvent(Tail tail, Health health, PlayerColor color)
             {
                 TailLength = tail.Length;
                 Health = health.LifePoints;
+                Color = color;
             }
 
             public int TailLength { get; private set; }
             public int Health { get; private set; }
+            public PlayerColor Color { get; private set; }
         }
 
         public Water TakeDamage(Damage damage)
@@ -75,6 +77,7 @@ namespace Assets.FuryEngine.DragonPackage
                 }
             }
 
+            OnDragonTookDamage(new DragonTookDamageEvent(Tail, _tailHealth, Color));
             return water;
         }
                 
@@ -120,6 +123,7 @@ namespace Assets.FuryEngine.DragonPackage
         {
             public Direction Direction { get; set; }
             public Location Location { get; set; }
+            public PlayerColor Color { get; set; }
         }
 
         public delegate void DragonMovedEventHandler(DragonMovedEvent @event);
@@ -135,7 +139,8 @@ namespace Assets.FuryEngine.DragonPackage
                 MovedEventHandler(new DragonMovedEvent
                 {
                     Location = target,
-                    Direction = direction
+                    Direction = direction,
+                    Color = Color
                 });
             }
         }

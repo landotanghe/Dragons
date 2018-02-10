@@ -3571,6 +3571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871b5b8dff0e1144d9b54147701ecaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerIndex: 0
   head: {fileID: 171149358}
   tail:
   - {fileID: 502761147}
@@ -3579,6 +3580,7 @@ MonoBehaviour:
   board: {fileID: 550667900}
   fireBar: {fileID: 1360662446}
   waterBar: {fileID: 865009423}
+  color: 1
 --- !u!114 &1006937005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6284,6 +6286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871b5b8dff0e1144d9b54147701ecaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerIndex: 0
   head: {fileID: 281291367}
   tail:
   - {fileID: 1220785283}
@@ -6292,6 +6295,7 @@ MonoBehaviour:
   board: {fileID: 550667900}
   fireBar: {fileID: 163309593}
   waterBar: {fileID: 1653417027}
+  color: 0
 --- !u!4 &1876224651
 Transform:
   m_ObjectHideFlags: 0
