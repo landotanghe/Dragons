@@ -14,6 +14,11 @@ namespace Assets.Dragons
         public Bar fireBar;
         public Bar waterBar;
         public PlayerColor color;
+
+        public Dragon()
+        {
+
+        }
         
         public void Start()
         {
@@ -54,18 +59,21 @@ namespace Assets.Dragons
         private void MoveTo(Location target, Direction direction)
         {
             Debug.Log("head@ " + head.Location.X + "," + head.Location.Y);
-            MoveTailTo(tail, target, direction);
+            MoveTailTo(tail, head.Location, direction);
             head.Reposition(target, direction);
         }
         
-        private void MoveTailTo(TailSegment[] tail, Location location, Direction direction)
+        private void MoveTailTo(TailSegment[] tail, Location target, Direction direction)
         {
             foreach (var segment in tail)
             {
                 var previousLocation = segment.Location;
-                Debug.Log("segment@ " + previousLocation.X + "," + previousLocation.Y);
-                segment.Reposition(location, direction);
-                location = previousLocation;
+                var previousDirection = segment.Direction;
+                Debug.Log("segment was @ " + previousLocation.X + ", " + previousLocation.Y);
+
+                segment.Reposition(target, direction);
+                target = previousLocation;
+                direction = previousDirection;
             }
         }
     }

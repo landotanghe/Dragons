@@ -20,17 +20,14 @@ namespace Assets.Dragons
             Location = new Location(0, 0);
             Direction = Direction.North;
             Direction = Direction.South;
-        }        
-
-        public void Reposition(Location location, Direction upStream)
-        {
-            Location = location;
-            Direction = upStream;
         }
 
-        public void SetDownStream(Direction direction)
+        public void Reposition(Location location, Direction direction)
         {
-            DownStream = direction;
+            DownStream = Direction.Invert();
+
+            Location = location;
+            Direction = direction;
         }
 
         private const float TileWidth = Width / 7.0f;
