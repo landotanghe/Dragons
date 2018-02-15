@@ -17,13 +17,12 @@ namespace Assets.Dragons
 
         public Dragon()
         {
-
+            DragonX.OnDragonTookDamage += OnDragonDamaged;
+            DragonX.MovedEventHandler += OnDragonMoved;
         }
         
         public void Start()
         {
-            DragonX.OnDragonTookDamage += OnDragonDamaged;
-            DragonX.MovedEventHandler += OnDragonMoved;
         }
 
         public void Update()

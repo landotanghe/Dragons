@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Assets;
+﻿using Assets;
 using Assets.ActionPicker.ElementsWheel;
 using Assets.ActionPicker.ElementsWheel.Actions;
 using Assets.Dragons;
@@ -17,11 +15,12 @@ public class GameStateManager : MonoBehaviour
     public GameEngine GameEngine;
     public GameStateManager()
     {
-        GameEngine = GameEngine.Instantiate();
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        GameEngine = GameEngine.Instantiate();
         GameEngine.elementsWheel = elementsWheel;//TODO refactor
     }
 	

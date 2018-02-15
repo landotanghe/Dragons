@@ -34,8 +34,9 @@ namespace FuryEngine
 
         public void Reset()
         {
-            _whiteDragon = new DragonX(PlayerColor.White, new Location(1, 6), Direction.North, this);
+            _whiteDragon = new DragonX(PlayerColor.White, new Location(0, 6), Direction.East, this);
             _whiteDragon.MoveForwards().Execute();
+            _whiteDragon.TurnLeft().Execute();
             _whiteDragon.TurnLeft().Execute();
             _whiteDragon.TurnLeft().Execute();
 
@@ -76,10 +77,6 @@ namespace FuryEngine
         {
             _firePool.Add(exhaledFire);
         }
-
-
-
-
 
         public DragonX GetOpponentOf(DragonX dragon)
         {
