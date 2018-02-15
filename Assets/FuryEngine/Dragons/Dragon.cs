@@ -24,6 +24,8 @@ namespace Assets.FuryEngine.DragonPackage
             Head.Reposition(initialLocation, direction);
             Tail = new Tail();
             _gameEngine = gameEngine;
+            OnDragonHealed(new DragonHealthEventData(Tail, _tailHealth, Color));
+            OnDragonConsumedFire(new DragonFireEventData(_consumedFire, Color));
         }
 
         public Direction Direction
@@ -41,12 +43,33 @@ namespace Assets.FuryEngine.DragonPackage
         }
 
 
-        public delegate void DragonTookDamageHandler(DragonTookDamageEvent @event);
+        public delegate void DragonSpitFireHandler(DragonFireEventData @event);
+        public static event DragonSpitFireHandler OnDragonSpitFire;
+
+        public delegate void DragonConsumedFireHandler(DragonFireEventData @event);
+        public static event DragonConsumedFireHandler OnDragonConsumedFire;
+
+        public class DragonFireEventData
+        {
+            public DragonFireEventData(Fire fire, PlayerColor color)
+            {
+                ConsumedFire = fire.Amount;
+                Color = color;
+            }
+
+            public int ConsumedFire { get; private set; }
+            public PlayerColor Color { get; private set; }
+        }
+
+        public delegate void DragonTookDamageHandler(DragonHealthEventData @event);
         public static event DragonTookDamageHandler OnDragonTookDamage;
 
-        public class DragonTookDamageEvent
+        public delegate void DragonHealedHandler(DragonHealthEventData @event);
+        public static event DragonHealedHandler OnDragonHealed;
+
+        public class DragonHealthEventData
         {
-            public DragonTookDamageEvent(Tail tail, Health health, PlayerColor color)
+            public DragonHealthEventData(Tail tail, Health health, PlayerColor color)
             {
                 TailLength = tail.Length;
                 Health = health.LifePoints;
@@ -77,7 +100,7 @@ namespace Assets.FuryEngine.DragonPackage
                 }
             }
 
-            OnDragonTookDamage(new DragonTookDamageEvent(Tail, _tailHealth, Color));
+            OnDragonTookDamage(new DragonHealthEventData(Tail, _tailHealth, Color));
             return water;
         }
                 
@@ -99,6 +122,8 @@ namespace Assets.FuryEngine.DragonPackage
         public void Consume(Fire fire)
         {
             _consumedFire = _consumedFire + fire;
+
+            OnDragonSpitFire(new DragonFireEventData(_consumedFire, Color));
         }
 
         public bool CanConsumeWater()
@@ -109,6 +134,7 @@ namespace Assets.FuryEngine.DragonPackage
         public void Consume(Water water)
         {
             _tailHealth = _tailHealth + water;
+            OnDragonHealed(new DragonHealthEventData(Tail, _tailHealth, Color));
         }
 
         public Fire ExhaleFire()
@@ -116,6 +142,7 @@ namespace Assets.FuryEngine.DragonPackage
             var fire = _consumedFire;
             _consumedFire = Fire.Depleted;
 
+            OnDragonSpitFire(new DragonFireEventData(_consumedFire, Color));
             return fire;
         }
 

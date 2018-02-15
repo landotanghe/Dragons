@@ -17,10 +17,22 @@ namespace Assets.Dragons
 
         public Dragon()
         {
+            DragonX.OnDragonHealed += OnDragonHealed;
             DragonX.OnDragonTookDamage += OnDragonDamaged;
+
+            DragonX.OnDragonSpitFire += UpdateFire;
+            DragonX.OnDragonConsumedFire += UpdateFire;
+
             DragonX.MovedEventHandler += OnDragonMoved;
         }
-        
+
+        private void UpdateFire(DragonX.DragonFireEventData @event)
+        {
+            if (@event.Color != color)
+                return;
+            fireBar.fillRate = @event.ConsumedFire;
+        }
+
         public void Start()
         {
         }
@@ -29,19 +41,29 @@ namespace Assets.Dragons
         {
         }
         
-
-        public void OnDragonDamaged(DragonX.DragonTookDamageEvent @event)
+        public void OnDragonHealed(DragonX.DragonHealthEventData @event)
         {
             if (@event.Color != color)
                 return;
+            UpdateHealth(@event);
+        }
 
+        public void OnDragonDamaged(DragonX.DragonHealthEventData @event)
+        {
+            if (@event.Color != color)
+                return;
+            UpdateHealth(@event);
+        }
+
+        private void UpdateHealth(DragonX.DragonHealthEventData @event)
+        {
             waterBar.fillRate = @event.Health;
-            if(tail.Length > @event.TailLength)
+            if (tail.Length > @event.TailLength)
             {
                 tail = tail.Take(@event.TailLength).ToArray();
             }
         }
-                
+
         private void LoseSegment()
         {
             tail = tail.Take(tail.Length - 1).ToArray();
