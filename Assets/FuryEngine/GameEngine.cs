@@ -47,16 +47,16 @@ namespace FuryEngine
             _baGuaWheel = new BaGuaWheel();
 
             _whiteDragon = new DragonX(PlayerColor.White, new Location(0, 6), Direction.East, this);
-            _whiteDragon.MoveForwards().Execute();
-            _whiteDragon.TurnLeft().Execute();
-            _whiteDragon.TurnLeft().Execute();
-            _whiteDragon.TurnLeft().Execute();
+            _whiteDragon.CreateAction().MoveForwards().Execute();
+            _whiteDragon.CreateAction().TurnLeft().Execute();
+            _whiteDragon.CreateAction().TurnLeft().Execute();
+            _whiteDragon.CreateAction().TurnLeft().Execute();
 
             _blackDragon = new DragonX(PlayerColor.Black, new Location(5, 1), Direction.East, this);
-            _blackDragon.MoveForwards().Execute();
-            _blackDragon.MoveForwards().Execute();
-            _blackDragon.TurnRight().Execute();
-            _blackDragon.TurnRight().Execute();
+            _blackDragon.CreateAction().MoveForwards().Execute();
+            _blackDragon.CreateAction().MoveForwards().Execute();
+            _blackDragon.CreateAction().TurnRight().Execute();
+            _blackDragon.CreateAction().TurnRight().Execute();
 
             _firePool = FirePool.Instantiate();
             _waterPool = WaterPool.Instantiate();
@@ -164,7 +164,7 @@ namespace FuryEngine
 
         private void SwitchPlayer()
         {
-            _currentPlayer.ResetSpirits();
+            _currentPlayer.ResetActions();
             _currentPlayer = GetOpponentOf(_currentPlayer);
             LogCurrentPlayer();
             _actionExecutor = null;

@@ -1,6 +1,8 @@
-﻿using Assets.Dragons;
+﻿using System;
+using Assets.Dragons;
 using Assets.Dragons.Actions;
 using Assets.Dragons.Damages;
+using Assets.FuryEngine.Dragons;
 using FuryEngine;
 
 namespace Assets.FuryEngine.DragonPackage
@@ -13,6 +15,7 @@ namespace Assets.FuryEngine.DragonPackage
         private Tail Tail;
         private Fire _consumedFire;
         private GameEngine _gameEngine { get; set; }
+        private DragonActionFactory _dragonActionFactory;
 
         public DragonX(PlayerColor color, Location initialLocation, Direction direction, GameEngine gameEngine)
         {
@@ -24,6 +27,8 @@ namespace Assets.FuryEngine.DragonPackage
             _gameEngine = gameEngine;
             OnDragonHealed(new DragonHealthEventData(Tail, Color));
             OnDragonConsumedFire(new DragonFireEventData(_consumedFire, Color));
+
+            _dragonActionFactory = new DragonActionFactory(this, gameEngine);
         }
 
         public Direction Direction
@@ -38,6 +43,11 @@ namespace Assets.FuryEngine.DragonPackage
             {
                 return Head.Location;
             }
+        }
+
+        public DragonActionFactory CreateAction()
+        {
+            return _dragonActionFactory;
         }
 
 
@@ -154,6 +164,17 @@ namespace Assets.FuryEngine.DragonPackage
             }
         }
 
+        internal bool CanPickAnotherSpirit()
+        {
+            return _dragonActionFactory.CanPickAnotherSpirit();
+        }
+
+        internal void ResetActions()
+        {
+            attacked = false;
+            _dragonActionFactory.ResetSpirits();
+        }
+
         public bool Occupies(Location location)
         {
             return Head.Occupies(location) ||
@@ -161,51 +182,8 @@ namespace Assets.FuryEngine.DragonPackage
         }
 
         #region actions
-        public Move TurnLeft()
-        {
-            var newDirection = Direction.TurnLeft();
-            return new Move(this, newDirection, _gameEngine);
-        }
-
-
-        public Move TurnRight()
-        {
-            var newDirection = Direction.TurnRight();
-            return new Move(this, newDirection, _gameEngine);
-        }
-
-        public Move MoveForwards()
-        {
-            return new Move(this, Direction, _gameEngine);
-        }
-
-        public ExpelFireAction ExpelFire()
-        {
-            return new ExpelFireAction(this, _gameEngine);
-        }
-
-        public ExpelWaterAction ExpelWater()
-        {
-            return new ExpelWaterAction(this, _gameEngine);
-        }
-
-        public ConsumeWaterAction ConsumeWater()
-        {
-            return new ConsumeWaterAction(this, _gameEngine);
-        }
-
-        public ConsumeFireAction ConsumeFire()
-        {
-            return new ConsumeFireAction(this, _gameEngine);
-        }
-
-        public DragonAction DoNothing()
-        {
-            return new DoNothing(this, _gameEngine);
-        }
-
-
         //TODO refactor
+        private bool attacked = false;
         public void SetAttacked()
         {
             attacked = false;
@@ -215,32 +193,7 @@ namespace Assets.FuryEngine.DragonPackage
         {
             return attacked;
         }
-        private SpiritsConsumed _canRepeatSpirit;
-        private bool attacked = false;
-        internal void ResetSpirits()
-        {
-            _canRepeatSpirit = SpiritsConsumed.None;
-            attacked = false;
-        }
 
-        public bool CanPickAnotherSpirit()
-        {
-            return _canRepeatSpirit == SpiritsConsumed.OneAdditionalAllowed;
-        }
-
-        public DragonAction ChooseAdditionalSpirit()
-        {
-            if (_canRepeatSpirit == SpiritsConsumed.None)
-            {
-                _canRepeatSpirit = SpiritsConsumed.OneAdditionalAllowed;
-            }
-            else
-            {
-                _canRepeatSpirit = SpiritsConsumed.AdditionalUsedUp;
-            }
-
-            return new DoNothing(this, _gameEngine);
-        }
         #endregion
     }
 }
