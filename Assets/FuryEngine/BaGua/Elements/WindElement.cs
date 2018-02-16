@@ -1,9 +1,18 @@
 ﻿using Assets.Dragons;
+using Assets.FuryEngine.BaGua;
 
 namespace Assets.ActionPicker.ElementsWheel.Actions.Scripts
 {
-    public class WindElement : WheelElementAction
+    public class WindElement : BaGuaElement
     {
+        public override BaGuaElementType Type
+        {
+            get
+            {
+                return BaGuaElementType.Wind;
+            }
+        }
+
         protected override AvailableOptions[] GetAvailableOptions(Direction direction)
         {
             if (direction.IsHorizontal)

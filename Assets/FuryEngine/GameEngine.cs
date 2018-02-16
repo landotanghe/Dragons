@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Assets;
-using Assets.ActionPicker.ElementsWheel;
 using Assets.ActionPicker.ElementsWheel.Actions;
 using Assets.Dragons;
 using Assets.Dragons.Damages;
 using Assets.FuryEngine;
+using Assets.FuryEngine.BaGua;
 using Assets.FuryEngine.DragonPackage;
 
 namespace FuryEngine
@@ -19,7 +18,18 @@ namespace FuryEngine
         private FirePool _firePool;
 
         private DragonX _currentPlayer;
-        public ElementsWheel elementsWheel;
+        private BaGuaWheel _baGuaWheel;
+
+        public void RequestToDropOffDiscs(BaGuaElementType type)
+        {
+            var action = _baGuaWheel.DetermineAction(type);
+            if (IsAllowedAction(action))
+            {
+                _baGuaWheel.DropOffDiscs(type);
+                SelectAction(action);
+            };
+        }
+
 
         public static GameEngine Instantiate()
         {
@@ -34,6 +44,8 @@ namespace FuryEngine
 
         public void Reset()
         {
+            _baGuaWheel = new BaGuaWheel();
+
             _whiteDragon = new DragonX(PlayerColor.White, new Location(0, 6), Direction.East, this);
             _whiteDragon.MoveForwards().Execute();
             _whiteDragon.TurnLeft().Execute();
@@ -122,7 +134,7 @@ namespace FuryEngine
             }
         }
 
-        public bool IsAllowedAction(WheelElementAction action)
+        public bool IsAllowedAction(BaGuaElement action)
         {
             if (_actionExecutor != null)
                 return false;
@@ -130,7 +142,7 @@ namespace FuryEngine
             return action.GetAvailableOptions(_currentPlayer, this).Any();
         }
 
-        internal void SelectAction(WheelElementAction action)
+        internal void SelectAction(BaGuaElement action)
         {
             if (!IsAllowedAction(action))
                 throw new InvalidOperationException("Can't select this action now");
@@ -161,17 +173,6 @@ namespace FuryEngine
         private void LogCurrentPlayer()
         {
            // Debug.Log("current player is : " + (_currentPlayer == whiteDragon ? "white" : "black"));
-        }
-
-        private bool CanMoveDiscsFrom(int selectedDiscPosition)
-        {
-            if (!elementsWheel.HasDiscsAt(selectedDiscPosition))
-            {
-                return false;
-            }
-
-            var predictedAction = elementsWheel.GetActionFor(selectedDiscPosition);
-            return predictedAction.CanExecute(_whiteDragon, this);
         }
 
     }

@@ -164,7 +164,6 @@ GameObject:
   m_Component:
   - component: {fileID: 73963591}
   - component: {fileID: 73963590}
-  - component: {fileID: 73963592}
   - component: {fileID: 73963593}
   m_Layer: 0
   m_Name: Wind
@@ -230,17 +229,6 @@ Transform:
   m_Father: {fileID: 1343596254}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &73963592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 73963589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4bca2f221983594e8fd23f9af25190d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &73963593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,11 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66229f75d0fbc14291b0f09c4e9a254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cells:
-  - {fileID: 808380646}
-  - {fileID: 447888564}
-  - {fileID: 245933733}
-  - {fileID: 1310015723}
+  cells: []
   fillRate: 0
 --- !u!1 &163342913
 GameObject:
@@ -1512,8 +1496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 1454313014}
-  wheel: {fileID: 1086189857}
   discs: {fileID: 679903237}
 --- !u!1 &447888564
 GameObject:
@@ -1786,7 +1768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whiteDragon: {fileID: 1006937004}
   blackDragon: {fileID: 1876224650}
-  elementsPool: {fileID: 1533937714}
+  elementsPool: {fileID: 0}
 --- !u!4 &550667901
 Transform:
   m_ObjectHideFlags: 0
@@ -2238,9 +2220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a89c233557373f4fa361ce3f9422e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  discs:
-  - {fileID: 1597706064}
-  - {fileID: 1597054610}
+  discs: []
 --- !u!1 &631148313
 GameObject:
   m_ObjectHideFlags: 0
@@ -2289,9 +2269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a89c233557373f4fa361ce3f9422e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  discs:
-  - {fileID: 1420318207}
-  - {fileID: 1489671617}
+  discs: []
 --- !u!1 &638104185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2486,9 +2464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a89c233557373f4fa361ce3f9422e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  discs:
-  - {fileID: 2011903127}
-  - {fileID: 137573323}
+  discs: []
 --- !u!1 &688207410
 GameObject:
   m_ObjectHideFlags: 0
@@ -2770,8 +2746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 373622289}
-  wheel: {fileID: 1086189857}
   discs: {fileID: 928828540}
 --- !u!1 &773524319
 GameObject:
@@ -2783,7 +2757,6 @@ GameObject:
   - component: {fileID: 773524320}
   - component: {fileID: 773524321}
   - component: {fileID: 773524322}
-  - component: {fileID: 773524323}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -2857,17 +2830,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1617ae2d65d8c474d9652ed42c297a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &773524323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 773524319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6e89fd0b1b035842a0350ce5a43111a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &775675666
@@ -3256,12 +3218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66229f75d0fbc14291b0f09c4e9a254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cells:
-  - {fileID: 2059971939}
-  - {fileID: 2054987960}
-  - {fileID: 1261524537}
-  - {fileID: 801017125}
-  fillRate: 2
+  cells: []
+  fillRate: 0
 --- !u!1 &919780664
 GameObject:
   m_ObjectHideFlags: 0
@@ -3454,9 +3412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a89c233557373f4fa361ce3f9422e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  discs:
-  - {fileID: 0}
-  - {fileID: 0}
+  discs: []
 --- !u!4 &931978841 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4388238081196710, guid: a5330d181b26c7542b419fe370c11d19,
@@ -3511,8 +3467,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 1734109120}
-  wheel: {fileID: 1086189857}
   discs: {fileID: 631148315}
 --- !u!135 &994517700
 SphereCollider:
@@ -3571,7 +3525,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871b5b8dff0e1144d9b54147701ecaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   head: {fileID: 171149358}
   tail:
   - {fileID: 502761147}
@@ -3580,7 +3533,7 @@ MonoBehaviour:
   board: {fileID: 550667900}
   fireBar: {fileID: 1360662446}
   waterBar: {fileID: 865009423}
-  color: 1
+  color: 0
 --- !u!114 &1006937005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3940,9 +3893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a89c233557373f4fa361ce3f9422e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  discs:
-  - {fileID: 1045175933}
-  - {fileID: 554671123}
+  discs: []
 --- !u!1 &1086189856
 GameObject:
   m_ObjectHideFlags: 0
@@ -3951,7 +3902,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1086189858}
-  - component: {fileID: 1086189857}
   m_Layer: 0
   m_Name: ElementsWheel
   m_TagString: Untagged
@@ -3959,27 +3909,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1086189857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1086189856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 806e97979b6dac341ae7a23587051be0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  elements:
-  - {fileID: 1762740448}
-  - {fileID: 1343596256}
-  - {fileID: 994517699}
-  - {fileID: 744180979}
-  - {fileID: 1364676916}
-  - {fileID: 1751349499}
-  - {fileID: 414412074}
-  - {fileID: 1269742237}
-  game: {fileID: 1498665932}
 --- !u!4 &1086189858
 Transform:
   m_ObjectHideFlags: 0
@@ -4420,8 +4349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 489999297}
-  wheel: {fileID: 1086189857}
   discs: {fileID: 313944075}
 --- !u!135 &1269742238
 SphereCollider:
@@ -4516,7 +4443,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1343596254}
-  - component: {fileID: 1343596255}
   - component: {fileID: 1343596256}
   - component: {fileID: 1343596257}
   m_Layer: 0
@@ -4541,17 +4467,6 @@ Transform:
   m_Father: {fileID: 1086189858}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1343596255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1343596253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4bca2f221983594e8fd23f9af25190d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1343596256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4563,8 +4478,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 73963593}
-  wheel: {fileID: 1086189857}
   discs: {fileID: 165123715}
 --- !u!135 &1343596257
 SphereCollider:
@@ -4605,12 +4518,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66229f75d0fbc14291b0f09c4e9a254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cells:
-  - {fileID: 2132734753}
-  - {fileID: 1363644397}
-  - {fileID: 1481908684}
-  - {fileID: 2140346336}
-  fillRate: 2
+  cells: []
+  fillRate: 0
 --- !u!4 &1360662447
 Transform:
   m_ObjectHideFlags: 0
@@ -4829,8 +4738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 1573186270}
-  wheel: {fileID: 1086189857}
   discs: {fileID: 1080473418}
 --- !u!1 &1420318205
 GameObject:
@@ -5109,10 +5016,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57c5418713c0ae43b43ea1fcc822ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementsWheel: {fileID: 1086189857}
-  whiteDragon: {fileID: 1006937004}
-  blackDragon: {fileID: 1876224650}
-  board: {fileID: 550667900}
+  whiteDragon: {fileID: 0}
+  blackDragon: {fileID: 0}
+  board: {fileID: 0}
 --- !u!4 &1498665933
 Transform:
   m_ObjectHideFlags: 0
@@ -5254,22 +5160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2383cd8d86db414498e56005789725ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireShown:
-  - {fileID: 688207410}
-  - {fileID: 2137808069}
-  - {fileID: 649256877}
-  - {fileID: 1092775323}
-  - {fileID: 1684164929}
-  - {fileID: 1787195454}
-  - {fileID: 173913439}
-  - {fileID: 1862884755}
-  waterShown:
-  - {fileID: 158528048}
-  - {fileID: 1713184505}
-  - {fileID: 1786857285}
-  - {fileID: 1364626665}
-  - {fileID: 1506417387}
-  - {fileID: 607454376}
+  fireShown: []
+  waterShown: []
 --- !u!1 &1573186267
 GameObject:
   m_ObjectHideFlags: 0
@@ -5474,12 +5366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66229f75d0fbc14291b0f09c4e9a254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cells:
-  - {fileID: 410731385}
-  - {fileID: 333433460}
-  - {fileID: 213601008}
-  - {fileID: 1158780716}
-  fillRate: 2
+  cells: []
+  fillRate: 0
 --- !u!4 &1653417028
 Transform:
   m_ObjectHideFlags: 0
@@ -5782,8 +5670,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1734109118}
   - component: {fileID: 1734109117}
-  - component: {fileID: 1734109119}
-  - component: {fileID: 1734109120}
   m_Layer: 0
   m_Name: Sky
   m_TagString: Untagged
@@ -5848,28 +5734,6 @@ Transform:
   m_Father: {fileID: 994517698}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1734109119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1734109116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf445f86ed4b33841897dcde91835955, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1734109120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1734109116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea223e91fc8651448d216bc510b6e34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1751349497
 GameObject:
   m_ObjectHideFlags: 0
@@ -5913,8 +5777,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 1927230646}
-  wheel: {fileID: 1086189857}
   discs: {fileID: 620834003}
 --- !u!135 &1751349500
 SphereCollider:
@@ -6011,8 +5873,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: 773524323}
-  wheel: {fileID: 1086189857}
   discs: {fileID: 630060859}
 --- !u!58 &1762740449
 CircleCollider2D:
@@ -6286,14 +6146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871b5b8dff0e1144d9b54147701ecaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   head: {fileID: 281291367}
   tail:
   - {fileID: 1220785283}
   - {fileID: 1841006962}
   - {fileID: 931978842}
   board: {fileID: 550667900}
-  fireBar: {fileID: 163309593}
+  fireBar: {fileID: 1360662446}
   waterBar: {fileID: 1653417027}
   color: 0
 --- !u!4 &1876224651

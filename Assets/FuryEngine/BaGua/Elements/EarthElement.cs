@@ -1,13 +1,22 @@
 ﻿using Assets.Dragons;
+using Assets.FuryEngine.BaGua;
 
 namespace Assets.ActionPicker.ElementsWheel.Actions.Scripts
 {
-    public class SkyElement : WheelElementAction
+    public class EarthElement : BaGuaElement
     {
+        public override BaGuaElementType Type
+        {
+            get
+            {
+                return BaGuaElementType.Earth;
+            }
+        }
+
         protected override AvailableOptions[] GetAvailableOptions(Direction direction)
         {
-            if (direction.IsHorizontal)
-                return new AvailableOptions[0] { };
+            if (direction.IsVertical)
+                return new AvailableOptions[0] {};
 
             return new[]
             {

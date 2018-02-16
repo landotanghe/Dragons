@@ -6,7 +6,6 @@ namespace Assets.Dragons
 {
     public class Dragon : MonoBehaviour
     {
-        public int playerIndex;
         public Head head;
         public TailSegment[] tail;
         public Board board;

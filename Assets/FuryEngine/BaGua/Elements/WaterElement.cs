@@ -1,10 +1,20 @@
 ﻿using Assets.ActionPicker.ElementsWheel.Actions;
 using Assets.Dragons;
+using Assets.FuryEngine.BaGua;
 
 namespace Assets
 {
-    public class WaterElement : WheelElementAction
-    {        
+    public class WaterElement : BaGuaElement
+    {
+        public override BaGuaElementType Type
+        {
+            get
+            {
+                return BaGuaElementType.Water;
+            }
+        }
+
+
         protected override AvailableOptions[] GetAvailableOptions(Direction direction)
         {
             return new[]

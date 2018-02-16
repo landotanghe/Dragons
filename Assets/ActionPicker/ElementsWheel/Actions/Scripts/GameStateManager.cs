@@ -1,14 +1,19 @@
 ﻿using Assets;
-using Assets.ActionPicker.ElementsWheel;
 using Assets.ActionPicker.ElementsWheel.Actions;
 using Assets.Dragons;
+using Assets.FuryEngine.BaGua;
 using FuryEngine;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
 {
-    public ElementsWheel elementsWheel;
     public Dragon whiteDragon;
+
+    internal void RequestToDropDiscs(BaGuaElementType type)
+    {
+        GameEngine.RequestToDropOffDiscs(type);
+    }
+
     public Dragon blackDragon;
     public Board board;
     
@@ -21,7 +26,6 @@ public class GameStateManager : MonoBehaviour
 	void Start ()
     {
         GameEngine = GameEngine.Instantiate();
-        GameEngine.elementsWheel = elementsWheel;//TODO refactor
     }
 	
 	// Update is called once per frame
@@ -39,7 +43,7 @@ public class GameStateManager : MonoBehaviour
 
     private void CheckInput(KeyCode keyPressed)
     {
-        if(GameEngine._actionExecutor != null)//TODO refactor
+        if(GameEngine != null && GameEngine._actionExecutor != null)//TODO refactor
         {
             var option = SelectOption(keyPressed);
             GameEngine.Play(option);
@@ -89,12 +93,12 @@ public class GameStateManager : MonoBehaviour
         return option;
     }
 
-    internal void SelectAction(WheelElementAction action)
+    internal void SelectAction(BaGuaElement action)
     {
         GameEngine.SelectAction(action);
     }
 
-    internal bool IsAllowedAction(WheelElementAction action)
+    internal bool IsAllowedAction(BaGuaElement action)
     {
         return GameEngine.IsAllowedAction(action);
     }

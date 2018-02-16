@@ -12,12 +12,12 @@ namespace Assets.ActionPicker.ElementsWheel.Actions
         private DragonX _dragon;
         private GameEngine _game;
 
-        private WheelElementAction _action;
+        private BaGuaElement _action;
         private int _nextOptionToPick;
 
         private AvailableOptions[] _availableOptions;
 
-        public ActionExecutor(WheelElementAction action, DragonX dragon, GameEngine game)
+        public ActionExecutor(BaGuaElement action, DragonX dragon, GameEngine game)
         {
             _action = action;
             _availableOptions = _action.GetAvailableOptions(dragon, game);
