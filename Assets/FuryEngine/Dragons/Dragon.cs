@@ -11,20 +11,18 @@ namespace Assets.FuryEngine.DragonPackage
 
         private BodyPart Head;
         private Tail Tail;
-        private Health _tailHealth;
         private Fire _consumedFire;
         private GameEngine _gameEngine { get; set; }
 
         public DragonX(PlayerColor color, Location initialLocation, Direction direction, GameEngine gameEngine)
         {
             Color = color;
-            _tailHealth = Health.Full;
             _consumedFire = Fire.Depleted;
             Head = new BodyPart();
             Head.Reposition(initialLocation, direction);
             Tail = new Tail();
             _gameEngine = gameEngine;
-            OnDragonHealed(new DragonHealthEventData(Tail, _tailHealth, Color));
+            OnDragonHealed(new DragonHealthEventData(Tail, Color));
             OnDragonConsumedFire(new DragonFireEventData(_consumedFire, Color));
         }
 
@@ -69,10 +67,10 @@ namespace Assets.FuryEngine.DragonPackage
 
         public class DragonHealthEventData
         {
-            public DragonHealthEventData(Tail tail, Health health, PlayerColor color)
+            public DragonHealthEventData(Tail tail, PlayerColor color)
             {
                 TailLength = tail.Length;
-                Health = health.LifePoints;
+                Health = tail._tailHealth.LifePoints;
                 Color = color;
             }
 
@@ -86,29 +84,13 @@ namespace Assets.FuryEngine.DragonPackage
             var water = Water.Depleted;
             while(IsAlive() && damage.Value > 0)
             {
-                if (_tailHealth.CanBear(Damage.One))
-                {
-                    water++;
-                    damage--;
-                }
-                else
-                {
-                    _tailHealth = Health.Full;
-
-                    damage = damage - _tailHealth.DamageToDestroy;
-                    water -= _tailHealth.WaterNeededToHeal;
-                }
+                water += Tail.TakeDamage(damage);
             }
 
-            OnDragonTookDamage(new DragonHealthEventData(Tail, _tailHealth, Color));
+            OnDragonTookDamage(new DragonHealthEventData(Tail, Color));
             return water;
         }
                 
-        private void LoseSegment()
-        {
-            Tail.RemoveSegment();
-        }
-
         public bool IsAlive()
         {
             return Tail.Length > 0;
@@ -128,13 +110,13 @@ namespace Assets.FuryEngine.DragonPackage
 
         public bool CanConsumeWater()
         {
-            return _tailHealth.LifePoints < 4;
+            return Tail._tailHealth.LifePoints < 4;
         }
 
         public void Consume(Water water)
         {
-            _tailHealth = _tailHealth + water;
-            OnDragonHealed(new DragonHealthEventData(Tail, _tailHealth, Color));
+            Tail.Heal(water);
+            OnDragonHealed(new DragonHealthEventData(Tail, Color));
         }
 
         public Fire ExhaleFire()

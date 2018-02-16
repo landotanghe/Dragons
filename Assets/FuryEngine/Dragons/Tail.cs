@@ -1,4 +1,5 @@
 ﻿using Assets.Dragons;
+using Assets.Dragons.Damages;
 using System.Linq;
 
 namespace Assets.FuryEngine.DragonPackage
@@ -7,6 +8,8 @@ namespace Assets.FuryEngine.DragonPackage
     {
         private BodyPart[] _segments;
 
+        public Health _tailHealth { get; private set; }
+
         public Tail()
         {
             _segments = new BodyPart[3];
@@ -14,9 +17,36 @@ namespace Assets.FuryEngine.DragonPackage
             {
                 _segments[i] = new BodyPart();
             }
+            _tailHealth = Health.Full;
         }
 
-        public void RemoveSegment()
+        public Water TakeDamage(Damage damage)
+        {
+            var water = Water.Depleted;
+
+            if (_tailHealth.CanBear(Damage.One))
+            {
+                water++;
+                damage--;
+            }
+            else
+            {
+                RemoveSegment();
+                _tailHealth = Health.Full;
+
+                damage = damage - _tailHealth.DamageToDestroy;
+                water -= _tailHealth.WaterNeededToHeal;
+            }
+
+            return water;
+        }
+
+        public void Heal(Water water)
+        {
+            _tailHealth = _tailHealth + water;
+        }
+
+        private void RemoveSegment()
         {
             _segments = _segments.Take(_segments.Length - 1).ToArray();
         }
