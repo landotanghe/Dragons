@@ -6,11 +6,11 @@ namespace Assets.FuryEngine.Actions
 {
     public abstract class ExpelElementAction : DragonAction
     {
-        protected Location.Location _fullDamageLocation;
-        protected Location.Location[] _partialDamageLocations;
-        protected Location.Location _noDistanceDamageLocation;
+        private readonly Location.Location _fullDamageLocation;
+        private readonly Location.Location[] _partialDamageLocations;
+        private readonly Location.Location _noDistanceDamageLocation;
 
-        public ExpelElementAction(DragonX dragon, GameEngine game) : base(dragon, game)
+        protected ExpelElementAction(DragonX dragon, GameEngine game) : base(dragon, game)
         {
             _fullDamageLocation = Dragon.Location + Dragon.Direction;
             _partialDamageLocations = new[]
@@ -42,10 +42,19 @@ namespace Assets.FuryEngine.Actions
         private bool CanReachEnemy()
         {
             var target = GameEngine.GetOpponentOf(Dragon);
+            return CanDealFullDamageTo(target) || CanDealPartialDamageTo(target);
+        }
 
-            return target.Occupies(_fullDamageLocation) ||
-                _partialDamageLocations.Any(location => target.Occupies(location)) && GameEngine.IsFreeSpace(_fullDamageLocation) ||
-                target.Occupies(_noDistanceDamageLocation) && GameEngine.IsFreeSpace(_fullDamageLocation) && GameEngine.IsFreeSpace(_partialDamageLocations[0]);
+        private bool CanDealFullDamageTo(DragonX target)
+        {
+            return target.Occupies(_fullDamageLocation);
+        }
+
+        private bool CanDealPartialDamageTo(DragonX target)
+        {
+            return GameEngine.IsFreeSpace(_fullDamageLocation) &&
+                _partialDamageLocations.Any(location => target.Occupies(location)) ||
+                target.Occupies(_noDistanceDamageLocation) && GameEngine.IsFreeSpace(_partialDamageLocations[0]);
         }
 
         public override void Execute()
