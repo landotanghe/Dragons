@@ -13,15 +13,7 @@ public class Element : MonoBehaviour
     {
         game.RequestToDropDiscs(type);
     }
-
-    public void AddDisc(Assets.ActionPicker.ElementsWheel.Disc disc)
-    {
-        if (disc == null)
-            throw new ArgumentNullException();
-
-        discs.Add(disc);
-    }
-    
+        
     // Use this for initialization
     void Start ()
     {
@@ -32,7 +24,11 @@ public class Element : MonoBehaviour
     {
         var configuration = @event.DiscConfiguration.Where(c => c.ElementType == type).First();
 
-        //element.//TODO update disc stack
+        discs.RemoveAll();
+        foreach(var discColor in configuration.Discs)
+        {
+            discs.AddDisc(discColor);
+        }
     }
 
     // Update is called once per frame
