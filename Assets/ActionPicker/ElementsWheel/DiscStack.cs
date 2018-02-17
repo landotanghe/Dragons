@@ -1,5 +1,6 @@
 ﻿using Assets.FuryEngine.DragonPackage;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,23 +9,24 @@ namespace Assets.ActionPicker.ElementsWheel
     public class DiscStack : MonoBehaviour
     {
         public GameObject prefab;
-        private int count;
+        private List<GameObject> discs = new List<GameObject>();
         
         public void RemoveAll()
         {
-            foreach (Transform child in transform)
+            foreach (var child in discs)
             {
-                GameObject.Destroy(child.gameObject);
+                GameObject.Destroy(child);
             }
-            count = 0;
+            discs = new List<GameObject>();
         }
 
         public void AddDisc(PlayerColor color)
         {
-            var disc = Instantiate(prefab, transform.position + new Vector3(0, 0.3f + 0.35f * count, 0), Quaternion.identity);
+            var disc = Instantiate(prefab, transform.position + new Vector3(0, 0.35f * discs.Count, 0), Quaternion.identity);
             var coloredDisc = disc.GetComponent<ColoredDisc>();
             coloredDisc.Color = color;
-            count++;
+
+            discs.Add(disc);
         }
     }
 }
