@@ -51,6 +51,16 @@ namespace Assets.FuryEngine.BaGua
             {
                 _counterClockWiseElements.Add(_elements[i], _elements[i + 1]);
             }
+
+
+            DiscsDropped(new BaGuaDiscConfigurationChangedEvent
+            {
+                DiscConfiguration = _elements.Select(e => new BaGuaDiscConfigurationChangedEvent.ElementDiscs
+                {
+                    Discs = e.GetDiscConfiguration(),
+                    ElementType = e.Type
+                }).ToArray()
+            });
         }
         
         public BaGuaElement DetermineAction(BaGuaElementType type)

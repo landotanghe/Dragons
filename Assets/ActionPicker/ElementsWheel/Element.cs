@@ -25,8 +25,11 @@ public class Element : MonoBehaviour
         var configuration = @event.DiscConfiguration.Where(c => c.ElementType == type).First();
 
         discs.RemoveAll();
-        foreach(var discColor in configuration.Discs)
+
+        Debug.Log("Discs removed from " + type);
+        foreach (var discColor in configuration.Discs)
         {
+            Debug.Log("Disc " + discColor + " added to " + type);
             discs.AddDisc(discColor);
         }
     }

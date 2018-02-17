@@ -7,47 +7,24 @@ namespace Assets.ActionPicker.ElementsWheel
 {
     public class DiscStack : MonoBehaviour
     {
-        public Transform prefab;
-        public Disc[] discs;
-        //TODO use prefab to instantiate discs
-        public int Count
-        {
-            get
-            {
-                return discs.Length;
-            }
-        }
+        public GameObject prefab;
+        private int count;
         
-        public Disc[] RemoveAll()
+        public void RemoveAll()
         {
             foreach (Transform child in transform)
             {
                 GameObject.Destroy(child.gameObject);
             }
-            var removed = discs;
-            discs = new Disc[0];
-
-            return removed;
+            count = 0;
         }
 
         public void AddDisc(PlayerColor color)
         {
-
-        }
-
-        private void Add(Disc disc)
-        {
-            disc.transform.SetParent(transform);
-            disc.transform.position = transform.position + new Vector3(0, 0.3f + 0.35f * Count, 0);
-
-            var changedDiscs = discs.ToList();
-            changedDiscs.Add(disc);
-            discs = changedDiscs.ToArray();
-        }
-
-        public bool Any()
-        {
-            return Count > 0;
+            var disc = Instantiate(prefab, transform.position + new Vector3(0, 0.3f + 0.35f * count, 0), Quaternion.identity);
+            var coloredDisc = disc.GetComponent<ColoredDisc>();
+            coloredDisc.Color = color;
+            count++;
         }
     }
 }
