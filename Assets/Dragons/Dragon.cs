@@ -29,7 +29,7 @@ namespace Assets.Dragons
         {
             if (@event.Color != color)
                 return;
-            fireBar.fillRate = @event.ConsumedFire;
+            fireBar.FillRate = @event.ConsumedFire;
         }
 
         public void Start()
@@ -56,7 +56,7 @@ namespace Assets.Dragons
 
         private void UpdateHealth(DragonX.DragonHealthEventData @event)
         {
-            waterBar.fillRate = @event.Health;
+            waterBar.FillRate = @event.Health;
             if (tail.Length > @event.TailLength)
             {
                 tail = tail.Take(@event.TailLength).ToArray();
