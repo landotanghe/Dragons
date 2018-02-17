@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Assets.FuryEngine.BaGua;
 using Assets.FuryEngine.Damages;
 using Assets.FuryEngine.Dragons;
 
@@ -7,21 +6,20 @@ namespace Assets.FuryEngine.Actions.ActionPicker
 {
     public class ActionExecutor
     {
-        private DragonX _dragon;
-        private GameEngine _game;
+        private readonly DragonX _dragon;
+        private readonly GameEngine _game;
+        private readonly AvailableOptions[] _availableOptions;
 
-        private BaGuaElement _action;
         private int _nextOptionToPick;
 
-        private AvailableOptions[] _availableOptions;
 
-        public ActionExecutor(BaGuaElement action, DragonX dragon, GameEngine game)
+        public ActionExecutor(AvailableOptions[] availableOptions, DragonX dragon, GameEngine game)
         {
-            _action = action;
-            _availableOptions = _action.GetAvailableOptions(dragon, game);
-            _nextOptionToPick = 0;
+            _availableOptions = availableOptions;
             _dragon = dragon;
             _game = game;
+
+            _nextOptionToPick = 0;
         }
 
         public bool CanPlay(Option option)

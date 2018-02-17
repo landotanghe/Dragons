@@ -5,6 +5,7 @@ using Assets.FuryEngine.BaGua;
 using Assets.FuryEngine.Damages;
 using Assets.FuryEngine.Dragons;
 using Assets.FuryEngine.Location;
+using UnityEditor;
 
 namespace Assets.FuryEngine
 {
@@ -26,6 +27,11 @@ namespace Assets.FuryEngine
             {
                 _baGuaWheel.DropOffDiscs(type);
                 SelectAction(action);
+            }
+            else if (! _baGuaWheel.HasAValidMove(_currentPlayer, this))
+            {
+                _baGuaWheel.DropOffDiscs(type);
+                SkipAction();
             };
         }
 
@@ -124,11 +130,13 @@ namespace Assets.FuryEngine
             }
         }
 
-        public bool IsAllowedAction(BaGuaElement action)
+
+        private bool IsAllowedAction(BaGuaElement action)
         {
             if (_actionExecutor != null)
                 return false;
 
+            //TODO more accurate calculation of can execute option
             return action.GetAvailableOptions(_currentPlayer, this).Any();
         }
 
@@ -137,7 +145,16 @@ namespace Assets.FuryEngine
             if (!IsAllowedAction(action))
                 throw new InvalidOperationException("Can't select this action now");
 
-            _actionExecutor = new ActionExecutor(action, _currentPlayer, this);
+            var options = action.GetAvailableOptions(_currentPlayer, this);
+            _actionExecutor = new ActionExecutor(options, _currentPlayer, this);
+        }
+
+        internal void SkipAction()
+        {
+            _actionExecutor = null;
+            _currentPlayer.TakeDamage(Damage.One);
+
+            SwitchPlayer();
         }
 
         private void ChoosePlayerForNextTurn()

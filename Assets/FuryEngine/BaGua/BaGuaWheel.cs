@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.FuryEngine.Actions.ActionPicker;
 using Assets.FuryEngine.BaGua.Elements;
 using Assets.FuryEngine.Dragons;
 
@@ -7,8 +8,6 @@ namespace Assets.FuryEngine.BaGua
 {
     public class BaGuaWheel
     {
-        public GameEngine game;
-
         private BaGuaElement[] _elements;
         private Dictionary<BaGuaElement, BaGuaElement> _counterClockWiseElements;
 
@@ -61,11 +60,26 @@ namespace Assets.FuryEngine.BaGua
                 }).ToArray()
             });
         }
-        
+
+        public bool HasAValidMove(DragonX player, GameEngine game)
+        {
+            var dropOffLocations = _elements.Select(DetermineActionFor).Distinct().ToList();
+
+            // TODO more accurate calculation of can execute option
+            // First calculate available moves?
+            return dropOffLocations
+                .Select(action => action.GetAvailableOptions(player, game).Any())
+                .Any(x => x);
+        }
+
         public BaGuaElement DetermineAction(BaGuaElementType type)
         {
             var element = GetElement(type);
+            return DetermineActionFor(element);
+        }
 
+        private BaGuaElement DetermineActionFor(BaGuaElement element)
+        {
             var dropLocation = element;
             var discCounts = element.NumberOfDiscs;
             for (int i = 0; i < discCounts; i++)

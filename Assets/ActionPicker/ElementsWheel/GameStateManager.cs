@@ -9,14 +9,14 @@ namespace Assets.ActionPicker.ElementsWheel
     public class GameStateManager : MonoBehaviour
     {
         public Dragon whiteDragon;
+        public Dragon blackDragon;
+        public Board board;
 
         internal void RequestToDropDiscs(BaGuaElementType type)
         {
             GameEngine.RequestToDropOffDiscs(type);
         }
 
-        public Dragon blackDragon;
-        public Board board;
     
         public GameEngine GameEngine;
         public GameStateManager()
@@ -92,16 +92,6 @@ namespace Assets.ActionPicker.ElementsWheel
             }
 
             return option;
-        }
-
-        internal void SelectAction(BaGuaElement action)
-        {
-            GameEngine.SelectAction(action);
-        }
-
-        internal bool IsAllowedAction(BaGuaElement action)
-        {
-            return GameEngine.IsAllowedAction(action);
         }
     }
 }
