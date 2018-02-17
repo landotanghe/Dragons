@@ -8,22 +8,37 @@ public class Element : MonoBehaviour
     public GameStateManager game;
     public Assets.FuryEngine.BaGua.BaGuaElementType type;
     public Assets.ActionPicker.ElementsWheel.DiscStack discs;
-    
+
+    //Need this property to handle initialization where event might be thrown before Start()
+    private BaGuaWheel.BaGuaDiscConfigurationChangedEvent.ElementDiscs configuration;
+
     public void OnMouseDown()
     {
         game.RequestToDropDiscs(type);
     }
         
     // Use this for initialization
-    void Start ()
+    public Element()
     {
         BaGuaWheel.DiscsDropped += OnDiscsDropped;
     }
 
+    public void Start()
+    {
+        if (configuration != null)
+            Apply(configuration);
+    }
+
     private void OnDiscsDropped(BaGuaWheel.BaGuaDiscConfigurationChangedEvent @event)
     {
-        var configuration = @event.DiscConfiguration.Where(c => c.ElementType == type).First();
+        configuration = @event.DiscConfiguration.Where(c => c.ElementType == type).First();
+        
+        if(discs != null)
+            Apply(configuration);
+    }
 
+    private void Apply(BaGuaWheel.BaGuaDiscConfigurationChangedEvent.ElementDiscs configuration)
+    {
         discs.RemoveAll();
 
         Debug.Log("Discs removed from " + type);
