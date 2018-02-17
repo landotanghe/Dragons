@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Assets.SeedWork;
+using Assets.FuryEngine.SeedWork;
 
-namespace Assets.Dragons
+namespace Assets.FuryEngine.Location
 {
     public class Direction : ValueObject
     {

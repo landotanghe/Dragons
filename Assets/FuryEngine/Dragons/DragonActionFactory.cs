@@ -1,7 +1,5 @@
 ﻿using Assets.Dragons;
-using Assets.Dragons.Actions;
-using Assets.FuryEngine.DragonPackage;
-using FuryEngine;
+using Assets.FuryEngine.Actions;
 
 namespace Assets.FuryEngine.Dragons
 {

@@ -1,7 +1,7 @@
-﻿using Assets.FuryEngine.DragonPackage;
-using System.Linq;
+﻿using System.Linq;
+using Assets.FuryEngine.Dragons;
 
-namespace Assets.ActionPicker.ElementsWheel.Actions
+namespace Assets.FuryEngine.Actions.ActionPicker
 {
     public class AvailableOptions
     {

@@ -1,11 +1,7 @@
-﻿using System;
-using Assets.Dragons;
-using Assets.Dragons.Actions;
-using Assets.Dragons.Damages;
-using Assets.FuryEngine.Dragons;
-using FuryEngine;
+﻿using Assets.FuryEngine.Damages;
+using Assets.FuryEngine.Location;
 
-namespace Assets.FuryEngine.DragonPackage
+namespace Assets.FuryEngine.Dragons
 {
     public class DragonX
     {
@@ -17,7 +13,7 @@ namespace Assets.FuryEngine.DragonPackage
         private GameEngine _gameEngine { get; set; }
         private DragonActionFactory _dragonActionFactory;
 
-        public DragonX(PlayerColor color, Location initialLocation, Direction direction, GameEngine gameEngine)
+        public DragonX(PlayerColor color, Location.Location initialLocation, Direction direction, GameEngine gameEngine)
         {
             Color = color;
             _consumedFire = Fire.Depleted;
@@ -39,7 +35,7 @@ namespace Assets.FuryEngine.DragonPackage
             }
         }
 
-        public Location Location { get
+        public Location.Location Location { get
             {
                 return Head.Location;
             }
@@ -141,14 +137,14 @@ namespace Assets.FuryEngine.DragonPackage
         public class DragonMovedEvent
         {
             public Direction Direction { get; set; }
-            public Location Location { get; set; }
+            public Location.Location Location { get; set; }
             public PlayerColor Color { get; set; }
         }
 
         public delegate void DragonMovedEventHandler(DragonMovedEvent @event);
         public static event DragonMovedEventHandler MovedEventHandler;
 
-        public void MoveTo(Location target, Direction direction)
+        public void MoveTo(Location.Location target, Direction direction)
         {
             Tail.MoveTo(Head.Location, direction);
             Head.Reposition(target, direction);
@@ -175,7 +171,7 @@ namespace Assets.FuryEngine.DragonPackage
             _dragonActionFactory.ResetSpirits();
         }
 
-        public bool Occupies(Location location)
+        public bool Occupies(Location.Location location)
         {
             return Head.Occupies(location) ||
                 Tail.Occupies(location);

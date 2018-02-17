@@ -1,4 +1,4 @@
-﻿namespace Assets.FuryEngine.DragonPackage
+﻿namespace Assets.FuryEngine.Dragons
 {
     public enum PlayerColor
     {

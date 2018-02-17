@@ -1,8 +1,7 @@
-﻿using Assets.ActionPicker.ElementsWheel.Actions;
-using Assets.Dragons;
-using Assets.FuryEngine.BaGua;
+﻿using Assets.FuryEngine.Actions.ActionPicker;
+using Assets.FuryEngine.Location;
 
-namespace Assets
+namespace Assets.FuryEngine.BaGua.Elements
 {
     public class WaterElement : BaGuaElement
     {

@@ -1,15 +1,14 @@
-﻿using Assets.Dragons.Damages;
-using Assets.FuryEngine.DragonPackage;
-using FuryEngine;
-using System.Linq;
+﻿using System.Linq;
+using Assets.FuryEngine.Damages;
+using Assets.FuryEngine.Dragons;
 
-namespace Assets.Dragons
+namespace Assets.FuryEngine.Actions
 {
     public abstract class ExpelElementAction : DragonAction
     {
-        protected Location _fullDamageLocation;
-        protected Location[] _partialDamageLocations;
-        protected Location _noDistanceDamageLocation;
+        protected Location.Location _fullDamageLocation;
+        protected Location.Location[] _partialDamageLocations;
+        protected Location.Location _noDistanceDamageLocation;
 
         public ExpelElementAction(DragonX dragon, GameEngine game) : base(dragon, game)
         {

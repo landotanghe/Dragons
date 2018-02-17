@@ -1,5 +1,6 @@
-﻿using Assets.FuryEngine.DragonPackage;
-using System.Linq;
+﻿using System.Linq;
+using Assets.FuryEngine.Dragons;
+using Assets.FuryEngine.Location;
 using UnityEngine;
 
 namespace Assets.Dragons

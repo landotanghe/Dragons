@@ -1,22 +1,21 @@
-﻿using System;
-using Assets.Dragons;
+﻿using Assets.FuryEngine.Location;
 
-namespace Assets.FuryEngine.DragonPackage
+namespace Assets.FuryEngine.Dragons
 {
     public class BodyPart
     {
-        public Location Location { get; private set; }
+        public Location.Location Location { get; private set; }
         public Direction Direction { get; private set; }
         public Direction DownStream { get; private set; }
 
         public BodyPart()
         {
-            Location = new Location(0, 0);
+            Location = new Location.Location(0, 0);
             Direction = Direction.North;
             DownStream = Direction.South;
         }
 
-        public void Reposition(Location location, Direction direction)
+        public void Reposition(Location.Location location, Direction direction)
         {
             DownStream = Direction.Invert();
 
@@ -24,7 +23,7 @@ namespace Assets.FuryEngine.DragonPackage
             Direction = direction;
         }
 
-        internal bool Occupies(Location location)
+        internal bool Occupies(Location.Location location)
         {
             return location == Location;
         }

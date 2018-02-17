@@ -1,12 +1,12 @@
-﻿using Assets.FuryEngine.DragonPackage;
-using FuryEngine;
+﻿using Assets.FuryEngine.Dragons;
+using Assets.FuryEngine.Location;
 
-namespace Assets.Dragons
+namespace Assets.FuryEngine.Actions
 {
     public class Move : DragonAction
     {
         public Direction Direction { get; private set; }
-        public Location _target;
+        public Location.Location _target;
 
         public Move(DragonX dragon, Direction direction, GameEngine game) : base(dragon, game)
         {

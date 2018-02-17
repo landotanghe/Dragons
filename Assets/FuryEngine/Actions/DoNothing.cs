@@ -1,7 +1,6 @@
-﻿using Assets.FuryEngine.DragonPackage;
-using FuryEngine;
+﻿using Assets.FuryEngine.Dragons;
 
-namespace Assets.Dragons.Actions
+namespace Assets.FuryEngine.Actions
 {
     public class DoNothing : DragonAction
     {

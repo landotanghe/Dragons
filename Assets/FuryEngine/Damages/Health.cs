@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Dragons.Damages
+namespace Assets.FuryEngine.Damages
 {
     public class Health
     {

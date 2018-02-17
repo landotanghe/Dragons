@@ -1,8 +1,8 @@
-﻿using Assets.SeedWork;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Assets.FuryEngine.SeedWork;
 
-namespace Assets.Dragons.Damages
+namespace Assets.FuryEngine.Damages
 {
     public class Damage : ValueObject
     {

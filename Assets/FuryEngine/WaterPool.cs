@@ -1,5 +1,6 @@
 ﻿using System;
-using Assets.Dragons.Damages;
+using Assets.FuryEngine.Damages;
+
 namespace Assets.FuryEngine
 {
     public class WaterPool

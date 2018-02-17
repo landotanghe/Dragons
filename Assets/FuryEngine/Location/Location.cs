@@ -1,7 +1,7 @@
-﻿using Assets.SeedWork;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Assets.FuryEngine.SeedWork;
 
-namespace Assets.Dragons
+namespace Assets.FuryEngine.Location
 {
     public class Location : ValueObject
     {

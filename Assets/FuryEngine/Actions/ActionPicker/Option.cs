@@ -1,8 +1,7 @@
-﻿using Assets.Dragons;
-using Assets.FuryEngine.DragonPackage;
-using System;
+﻿using System;
+using Assets.FuryEngine.Dragons;
 
-namespace Assets.ActionPicker.ElementsWheel.Actions
+namespace Assets.FuryEngine.Actions.ActionPicker
 {
     public class Option
     {

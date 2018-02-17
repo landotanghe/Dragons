@@ -1,8 +1,7 @@
-﻿using Assets.ActionPicker.ElementsWheel.Actions.Scripts;
-using Assets.FuryEngine.DragonPackage;
-using FuryEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.FuryEngine.BaGua.Elements;
+using Assets.FuryEngine.Dragons;
 
 namespace Assets.FuryEngine.BaGua
 {

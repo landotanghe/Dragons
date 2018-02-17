@@ -1,4 +1,4 @@
-﻿namespace Assets.Dragons.Damages
+﻿namespace Assets.FuryEngine.Damages
 {
     public class Fire
     {

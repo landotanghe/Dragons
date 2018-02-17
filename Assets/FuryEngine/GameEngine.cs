@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
-using Assets.ActionPicker.ElementsWheel.Actions;
-using Assets.Dragons;
-using Assets.Dragons.Damages;
-using Assets.FuryEngine;
+using Assets.FuryEngine.Actions.ActionPicker;
 using Assets.FuryEngine.BaGua;
-using Assets.FuryEngine.DragonPackage;
+using Assets.FuryEngine.Damages;
+using Assets.FuryEngine.Dragons;
+using Assets.FuryEngine.Location;
 
-namespace FuryEngine
+namespace Assets.FuryEngine
 {
     public class GameEngine
     {
@@ -46,13 +45,13 @@ namespace FuryEngine
         {
             _baGuaWheel = new BaGuaWheel();
 
-            _whiteDragon = new DragonX(PlayerColor.White, new Location(0, 6), Direction.East, this);
+            _whiteDragon = new DragonX(PlayerColor.White, new Location.Location(0, 6), Direction.East, this);
             _whiteDragon.CreateAction().MoveForwards().Execute();
             _whiteDragon.CreateAction().TurnLeft().Execute();
             _whiteDragon.CreateAction().TurnLeft().Execute();
             _whiteDragon.CreateAction().TurnLeft().Execute();
 
-            _blackDragon = new DragonX(PlayerColor.Black, new Location(5, 1), Direction.East, this);
+            _blackDragon = new DragonX(PlayerColor.Black, new Location.Location(5, 1), Direction.East, this);
             _blackDragon.CreateAction().MoveForwards().Execute();
             _blackDragon.CreateAction().MoveForwards().Execute();
             _blackDragon.CreateAction().TurnRight().Execute();
@@ -103,7 +102,7 @@ namespace FuryEngine
             _waterPool.Add(waterChange);
         }
         
-        public bool IsFreeSpace(Location location)
+        public bool IsFreeSpace(Location.Location location)
         {
             return IsWithinBounds(location.X, location.Y) &&
                 !_whiteDragon.Occupies(location) &&

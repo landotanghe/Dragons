@@ -1,8 +1,6 @@
-﻿using Assets.FuryEngine.DragonPackage;
-using FuryEngine;
-using System;
+﻿using Assets.FuryEngine.Dragons;
 
-namespace Assets.Dragons.Actions
+namespace Assets.FuryEngine.Actions
 {
     public class ConsumeWaterAction : DragonAction
     {

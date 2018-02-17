@@ -1,21 +1,24 @@
-﻿using Assets.FuryEngine.DragonPackage;
+﻿using Assets.FuryEngine.Dragons;
 
-public class Disc
+namespace Assets.FuryEngine.BaGua
 {
-    public static Disc White()
+    public class Disc
     {
-        return new Disc(PlayerColor.White);
-    }
+        public static Disc White()
+        {
+            return new Disc(PlayerColor.White);
+        }
 
-    public static Disc Black()
-    {
-        return new Disc(PlayerColor.Black);
-    }
+        public static Disc Black()
+        {
+            return new Disc(PlayerColor.Black);
+        }
 
-    private Disc(PlayerColor color)
-    {
-        Color = color;
-    }
+        private Disc(PlayerColor color)
+        {
+            Color = color;
+        }
 
-    public PlayerColor Color { get; private set; }
+        public PlayerColor Color { get; private set; }
+    }
 }

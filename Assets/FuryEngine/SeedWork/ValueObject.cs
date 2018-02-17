@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.SeedWork
+namespace Assets.FuryEngine.SeedWork
 {
     public abstract class ValueObject
     {

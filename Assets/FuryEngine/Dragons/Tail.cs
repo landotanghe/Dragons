@@ -1,8 +1,8 @@
-﻿using Assets.Dragons;
-using Assets.Dragons.Damages;
-using System.Linq;
+﻿using System.Linq;
+using Assets.FuryEngine.Damages;
+using Assets.FuryEngine.Location;
 
-namespace Assets.FuryEngine.DragonPackage
+namespace Assets.FuryEngine.Dragons
 {
     public class Tail
     {
@@ -59,7 +59,7 @@ namespace Assets.FuryEngine.DragonPackage
             }
         }
 
-        public void MoveTo(Location location, Direction direction)
+        public void MoveTo(Location.Location location, Direction direction)
         {
             if (_segments.Length == 0)
                 return;
@@ -72,7 +72,7 @@ namespace Assets.FuryEngine.DragonPackage
             }
         }
 
-        public bool Occupies(Location location)
+        public bool Occupies(Location.Location location)
         {
             return _segments.Any(part => part.Occupies(location));
         }

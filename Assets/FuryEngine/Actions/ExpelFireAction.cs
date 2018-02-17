@@ -1,8 +1,7 @@
-﻿using Assets.Dragons.Damages;
-using Assets.FuryEngine.DragonPackage;
-using FuryEngine;
+﻿using Assets.FuryEngine.Damages;
+using Assets.FuryEngine.Dragons;
 
-namespace Assets.Dragons
+namespace Assets.FuryEngine.Actions
 {
     public class ExpelFireAction : ExpelElementAction
     {

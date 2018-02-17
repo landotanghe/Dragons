@@ -1,5 +1,5 @@
 ﻿using Assets.Dragons;
-using Assets.Dragons.Damages;
+using Assets.FuryEngine.Damages;
 using UnityEngine;
 
 namespace Assets

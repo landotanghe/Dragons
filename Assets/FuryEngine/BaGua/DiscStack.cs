@@ -1,44 +1,47 @@
-﻿using Assets.FuryEngine.DragonPackage;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.FuryEngine.Dragons;
 
-public class DiscStack
+namespace Assets.FuryEngine.BaGua
 {
-    private List<Disc> _discs;
-
-    public DiscStack()
+    public class DiscStack
     {
-        _discs = new List<Disc>();
-    }
+        private List<Disc> _discs;
 
-    public int Count
-    {
-        get
+        public DiscStack()
         {
-            return _discs.Count;
+            _discs = new List<Disc>();
         }
-    }
 
-    public Disc[] RemoveAll()
-    {
-        var removed = _discs;
-        _discs = new List<Disc>();
+        public int Count
+        {
+            get
+            {
+                return _discs.Count;
+            }
+        }
 
-        return removed.ToArray();
-    }
+        public Disc[] RemoveAll()
+        {
+            var removed = _discs;
+            _discs = new List<Disc>();
 
-    public void Add(Disc disc)
-    {
-        _discs.Add(disc);
-    }
+            return removed.ToArray();
+        }
 
-    public bool Any()
-    {
-        return Count > 0;
-    }
+        public void Add(Disc disc)
+        {
+            _discs.Add(disc);
+        }
 
-    public PlayerColor[] GetDiscConfiguration()
-    {
-        return _discs.Select(d => d.Color).ToArray();
+        public bool Any()
+        {
+            return Count > 0;
+        }
+
+        public PlayerColor[] GetDiscConfiguration()
+        {
+            return _discs.Select(d => d.Color).ToArray();
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Assets.FuryEngine.DragonPackage;
+﻿using Assets.FuryEngine.Dragons;
 using UnityEngine;
 
 namespace Assets.ActionPicker.ElementsWheel
