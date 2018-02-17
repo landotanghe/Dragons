@@ -2,7 +2,17 @@
 
 public class Disc
 {
-    public Disc(PlayerColor color)
+    public static Disc White()
+    {
+        return new Disc(PlayerColor.White);
+    }
+
+    public static Disc Black()
+    {
+        return new Disc(PlayerColor.Black);
+    }
+
+    private Disc(PlayerColor color)
     {
         Color = color;
     }

@@ -9,13 +9,18 @@ using System.Linq;
 public abstract class BaGuaElement {
     private DiscStack _discs;
 
+    public BaGuaElement()
+    {
+        _discs = new DiscStack();
+    }
 
-    public void AddDisc(Disc disc)
+    public BaGuaElement AddDisc(Disc disc)
     {
         if (disc == null)
-            throw new ArgumentNullException();
+            throw new ArgumentNullException("disc");
 
         _discs.Add(disc);
+        return this;
     }
 
     public abstract BaGuaElementType Type { get; }

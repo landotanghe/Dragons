@@ -34,17 +34,17 @@ namespace Assets.FuryEngine.BaGua
         {
             _elements = new BaGuaElement[]
             {
-                new SkyElement(),
+                new SkyElement().AddDisc(Disc.White()).AddDisc(Disc.White()),
                 new LakeElement(),
-                new FireElement(),
+                new FireElement().AddDisc(Disc.Black()).AddDisc(Disc.White()),
                 new ThunderElement(),
-                new EarthElement(),
+                new EarthElement().AddDisc(Disc.Black()).AddDisc(Disc.Black()),
                 new MountainElement(),
-                new WaterElement(),
+                new WaterElement().AddDisc(Disc.White()).AddDisc(Disc.Black()),
                 new WindElement()
             };
 
-               _counterClockWiseElements = new Dictionary<BaGuaElement, BaGuaElement>();
+            _counterClockWiseElements = new Dictionary<BaGuaElement, BaGuaElement>();
 
             _counterClockWiseElements.Add(_elements.Last(), _elements[0]);
             for (int i = 0; i < _elements.Length - 1; i++)

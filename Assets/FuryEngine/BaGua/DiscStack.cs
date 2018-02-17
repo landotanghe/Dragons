@@ -1,31 +1,35 @@
 ﻿using Assets.FuryEngine.DragonPackage;
+using System.Collections.Generic;
 using System.Linq;
 
 public class DiscStack
 {
-    private Disc[] _discs;
+    private List<Disc> _discs;
+
+    public DiscStack()
+    {
+        _discs = new List<Disc>();
+    }
 
     public int Count
     {
         get
         {
-            return _discs.Length;
+            return _discs.Count;
         }
     }
 
     public Disc[] RemoveAll()
     {
         var removed = _discs;
-        _discs = new Disc[0];
+        _discs = new List<Disc>();
 
-        return removed;
+        return removed.ToArray();
     }
 
     public void Add(Disc disc)
     {
-        var changedDiscs = _discs.ToList();
-        changedDiscs.Add(disc);
-        _discs = changedDiscs.ToArray();
+        _discs.Add(disc);
     }
 
     public bool Any()

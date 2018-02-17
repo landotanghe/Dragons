@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Element : MonoBehaviour
 {
-    public GameStateManager game { get; set; }
-    public Assets.FuryEngine.BaGua.BaGuaElementType type { get; set; }
+    public GameStateManager game;
+    public Assets.FuryEngine.BaGua.BaGuaElementType type;
     public Assets.ActionPicker.ElementsWheel.DiscStack discs;
     
     public void OnMouseDown()

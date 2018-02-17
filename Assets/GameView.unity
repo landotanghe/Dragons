@@ -1496,6 +1496,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 1498665932}
+  type: 4
   discs: {fileID: 679903237}
 --- !u!1 &447888564
 GameObject:
@@ -2746,6 +2748,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 1498665932}
+  type: 1
   discs: {fileID: 928828540}
 --- !u!1 &773524319
 GameObject:
@@ -3467,6 +3471,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 1498665932}
+  type: 0
   discs: {fileID: 631148315}
 --- !u!135 &994517700
 SphereCollider:
@@ -3533,7 +3539,7 @@ MonoBehaviour:
   board: {fileID: 550667900}
   fireBar: {fileID: 1360662446}
   waterBar: {fileID: 865009423}
-  color: 0
+  color: 1
 --- !u!114 &1006937005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4349,6 +4355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 1498665932}
+  type: 5
   discs: {fileID: 313944075}
 --- !u!135 &1269742238
 SphereCollider:
@@ -4478,6 +4486,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 1498665932}
+  type: 7
   discs: {fileID: 165123715}
 --- !u!135 &1343596257
 SphereCollider:
@@ -4738,6 +4748,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 1498665932}
+  type: 2
   discs: {fileID: 1080473418}
 --- !u!1 &1420318205
 GameObject:
@@ -5777,6 +5789,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 1498665932}
+  type: 3
   discs: {fileID: 620834003}
 --- !u!135 &1751349500
 SphereCollider:
@@ -5873,6 +5887,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542f79f42bde79540a94e531f52171f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 1498665932}
+  type: 6
   discs: {fileID: 630060859}
 --- !u!58 &1762740449
 CircleCollider2D:
