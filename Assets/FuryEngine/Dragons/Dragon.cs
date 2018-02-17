@@ -10,17 +10,37 @@ namespace Assets.FuryEngine.Dragons
         private BodyPart Head;
         private Tail Tail;
         private Fire _consumedFire;
-        private GameEngine _gameEngine { get; set; }
         private DragonActionFactory _dragonActionFactory;
 
-        public DragonX(PlayerColor color, Location.Location initialLocation, Direction direction, GameEngine gameEngine)
+        public static DragonX CreateBlack(Location.Location initialLocation, GameEngine gameEngine)
+        {
+            var blackDragon = new DragonX(PlayerColor.Black, initialLocation, Direction.West, gameEngine);
+            blackDragon.CreateAction().TurnRight().Execute();
+            blackDragon.CreateAction().TurnRight().Execute();
+            blackDragon.CreateAction().TurnRight().Execute();
+            blackDragon.CreateAction().TurnRight().Execute();
+
+            return blackDragon;
+        }
+
+        public static DragonX CreateWhite(Location.Location initialLocation, GameEngine gameEngine)
+        {
+            var whiteDragon = new DragonX(PlayerColor.White, initialLocation, Direction.South, gameEngine);
+            whiteDragon.CreateAction().TurnLeft().Execute();
+            whiteDragon.CreateAction().TurnLeft().Execute();
+            whiteDragon.CreateAction().TurnLeft().Execute();
+            whiteDragon.CreateAction().TurnLeft().Execute();
+
+            return whiteDragon;
+        }
+
+        private DragonX(PlayerColor color, Location.Location initialLocation, Direction direction, GameEngine gameEngine)
         {
             Color = color;
             _consumedFire = Fire.Depleted;
             Head = new BodyPart();
             Head.Reposition(initialLocation, direction);
             Tail = new Tail();
-            _gameEngine = gameEngine;
             OnDragonHealed(new DragonHealthEventData(Tail, Color));
             OnDragonConsumedFire(new DragonFireEventData(_consumedFire, Color));
 

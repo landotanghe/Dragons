@@ -45,17 +45,8 @@ namespace Assets.FuryEngine
         {
             _baGuaWheel = new BaGuaWheel();
 
-            _whiteDragon = new DragonX(PlayerColor.White, new Location.Location(0, 6), Direction.East, this);
-            _whiteDragon.CreateAction().MoveForwards().Execute();
-            _whiteDragon.CreateAction().TurnLeft().Execute();
-            _whiteDragon.CreateAction().TurnLeft().Execute();
-            _whiteDragon.CreateAction().TurnLeft().Execute();
-
-            _blackDragon = new DragonX(PlayerColor.Black, new Location.Location(5, 1), Direction.East, this);
-            _blackDragon.CreateAction().MoveForwards().Execute();
-            _blackDragon.CreateAction().MoveForwards().Execute();
-            _blackDragon.CreateAction().TurnRight().Execute();
-            _blackDragon.CreateAction().TurnRight().Execute();
+            _whiteDragon = DragonX.CreateWhite(new Location.Location(0, 6), this);
+            _blackDragon = DragonX.CreateBlack(new Location.Location(6, 0), this);
 
             _firePool = FirePool.Instantiate();
             _waterPool = WaterPool.Instantiate();
